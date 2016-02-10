@@ -18,7 +18,7 @@ namespace Zenon.MoviesLibrary.Controllers
         // GET api/values/5
         public string Get(int id)
         {
-            return "value";
+            return "not value";
         }
 
         // POST api/values
