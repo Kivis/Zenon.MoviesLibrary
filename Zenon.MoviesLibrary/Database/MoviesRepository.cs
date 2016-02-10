@@ -9,13 +9,12 @@ namespace Zenon.MoviesLibrary.API.Database
     public class MoviesRepository
     {
         private const string ConnectionString = @"Data Source=AK-PC\SQLEXPRESS;Initial Catalog=MoviesDatabase;Integrated Security=True;MultipleActiveResultSets=True;Application Name=MoviesLibrary";
-
+       
         public Movie GetMovie(int id)
         {
             var queryString =
                 "SELECT Movie_ID, Title, ReleaseDate, Description, Genre_ID, Director_ID, Language_ID " +
-                "FROM Movies " +
-                "WHERE Movie_ID = " + id;
+                "FROM Movies WHERE Movie_ID = " + id;
 
             using (var connection = new SqlConnection(ConnectionString))
             {
