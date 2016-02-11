@@ -8,7 +8,7 @@ namespace Zenon.MoviesLibrary.Controllers
     public class LibraryController : ApiController
     {
 
-        MoviesRepository getMoviesRepository = new MoviesRepository();
+        private MoviesRepository getMoviesRepository = new MoviesRepository();
 
         // GET api/values
         public List<Movie> Get()
