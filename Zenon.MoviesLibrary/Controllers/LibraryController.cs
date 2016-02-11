@@ -7,18 +7,17 @@ namespace Zenon.MoviesLibrary.Controllers
 {
     public class LibraryController : ApiController
     {
-
-        private MoviesRepository getMoviesRepository = new MoviesRepository();
+        private readonly MoviesRepository _moviesRepository = new MoviesRepository();
 
         // GET api/values
         public List<Movie> Get()
         {
-            return getMoviesRepository.GetMovies();
+            return _moviesRepository.GetMovies();
         }
         // GET api/values/5
-        public string Get(int id)
+        public Movie Get(int id)
         {
-            return getMoviesRepository.GetMovie(id).ToString();
+            return _moviesRepository.GetMovie(id);
         }
 
         // POST api/values
