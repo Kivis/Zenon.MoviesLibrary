@@ -1,24 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
+﻿using System.Collections.Generic;
 using System.Web.Http;
+using Zenon.MoviesLibrary.API.Database;
+using Zenon.MoviesLibrary.Models;
 
 namespace Zenon.MoviesLibrary.Controllers
 {
-    public class ValuesController : ApiController
+    public class LibraryController : ApiController
     {
-        // GET api/values
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
 
+        MoviesRepository getMoviesRepository = new MoviesRepository();
+
+        // GET api/values
+        public List<Movie> Get()
+        {
+            return getMoviesRepository.GetMovies();
+        }
         // GET api/values/5
         public string Get(int id)
         {
-            return "value";
+            return getMoviesRepository.GetMovie(id).ToString();
         }
 
         // POST api/values

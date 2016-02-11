@@ -9,7 +9,7 @@ namespace Zenon.MoviesLibrary.API.Database
     public class MoviesRepository
     {
         private const string ConnectionString = @"Data Source=AK-PC\SQLEXPRESS;Initial Catalog=MoviesDatabase;Integrated Security=True;MultipleActiveResultSets=True;Application Name=MoviesLibrary";
-
+        
         public Movie GetMovie(int id)
         {
             var queryString =
