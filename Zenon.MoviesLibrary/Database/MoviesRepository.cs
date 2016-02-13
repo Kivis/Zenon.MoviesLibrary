@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Linq;
 using Zenon.MoviesLibrary.Models;
 
 namespace Zenon.MoviesLibrary.API.Database
@@ -7,11 +8,11 @@ namespace Zenon.MoviesLibrary.API.Database
     public class MoviesRepository
     {
         private const string ConnectionString = @"Data Source=AK-PC\SQLEXPRESS;Initial Catalog=MoviesDatabase;Integrated Security=True;MultipleActiveResultSets=True;Application Name=MoviesLibrary";
-        
+        private GenresRepository _genresRepository = new GenresRepository();
+
         public Movie GetMovie(int id)
         {
             var queryString =
-
                 "SELECT Movie_ID, Title, ReleaseDate, Description, Genre_ID, Director_ID, Language_ID " +
                 "FROM Movies WHERE Movie_ID = " + id;
 
@@ -62,7 +63,7 @@ namespace Zenon.MoviesLibrary.API.Database
 
         private Movie ReadMovie(SqlDataReader reader)
         {
-            return new Movie
+            var movieDbModel = new MovieDbModel()
             {
                 MovieId = reader.GetInt32(0),
                 Title = reader.GetString(1),
@@ -72,6 +73,17 @@ namespace Zenon.MoviesLibrary.API.Database
                 DirectorId = reader.GetInt32(5),
                 LanguageId = reader.GetInt32(6)
             };
+            var movie = movieDbModel.GetMovieCore();
+
+            MapGenres(movie, movieDbModel);
+
+            return movie;
+        }
+
+        private void MapGenres(Movie movie, MovieDbModel movieDbModel)
+        {
+            var genre = _genresRepository.GetGenre(movieDbModel.GenreId);
+            movie.Genre = genre;
         }
     }
 }

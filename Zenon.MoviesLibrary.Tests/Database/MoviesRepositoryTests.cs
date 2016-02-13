@@ -1,7 +1,7 @@
 ﻿using NUnit.Framework;
 using Zenon.MoviesLibrary.API.Database;
 
-namespace Zenon.MoviesLibrary.API.Database
+namespace Zenon.MoviesLibrary.API.Tests.Database
 {
     [TestFixture]
     public class MoviesRepositoryTests
