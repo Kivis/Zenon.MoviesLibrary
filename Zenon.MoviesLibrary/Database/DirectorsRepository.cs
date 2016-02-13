@@ -11,8 +11,8 @@ namespace Zenon.MoviesLibrary.API.Database
         public Director GetDirector(int id)
         {
             var queryString =
-                "SELECT Director_ID, FirstName, LastName " +
-                "FROM Directors WHERE Director_ID = " + id;
+                    "SELECT Director_ID, FirstName, LastName " +
+                    "FROM Directors WHERE Director_ID = " + id;
 
             using (var connection = new SqlConnection(ConnectionString))
             {
@@ -33,7 +33,9 @@ namespace Zenon.MoviesLibrary.API.Database
 
         public List<Director> GetDirectors()
         {
-            var queryString = "SELECT * FROM Directors";
+            var queryString = 
+                    "SELECT Director_ID, FirstName, LastName " +
+                    "FROM Directors";
 
             var listOfDirectors = new List<Director>();
 

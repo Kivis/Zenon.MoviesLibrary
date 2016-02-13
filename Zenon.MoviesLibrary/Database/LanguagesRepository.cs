@@ -11,8 +11,8 @@ namespace Zenon.MoviesLibrary.API.Database
         public Language GetLanguage(int id)
         {
             var queryString =
-                "SELECT Language_ID, Name " +
-                "FROM Languages WHERE Language_ID = " + id;
+                    "SELECT Language_ID, Name " +
+                    "FROM Languages WHERE Language_ID = " + id;
 
             using (var connection = new SqlConnection(ConnectionString))
             {
@@ -33,7 +33,9 @@ namespace Zenon.MoviesLibrary.API.Database
 
         public List<Language> GetLanguages()
         {
-            var queryString = "SELECT * FROM Languages";
+            var queryString = 
+                    "SELECT Language_ID, Name " +
+                    "FROM Languages";
 
             var listOfLanguages = new List<Language>();
 

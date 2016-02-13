@@ -9,7 +9,7 @@ namespace Zenon.MoviesLibrary.Models
         public DateTime ReleaseDate { get; set; }
         public string Description { get; set; }
         public Genre Genre { get; set; }
-        public int DirectorId { get; set; }
-        public int LanguageId { get; set; }
+        public Director Director { get; set; }
+        public Language Language { get; set; }
     }
 }

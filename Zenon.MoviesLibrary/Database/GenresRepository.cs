@@ -11,8 +11,8 @@ namespace Zenon.MoviesLibrary.API.Database
         public Genre GetGenre(int id)
         {
             var queryString =
-                "SELECT Genre_ID, Name " +
-                "FROM Genres WHERE Genre_ID = " + id;
+                    "SELECT Genre_ID, Name " +
+                    "FROM Genres WHERE Genre_ID = " + id;
 
             using (var connection = new SqlConnection(ConnectionString))
             {
@@ -33,7 +33,9 @@ namespace Zenon.MoviesLibrary.API.Database
 
         public List<Genre> GetGenres()
         {
-            var queryString = "SELECT * FROM Genres";
+            var queryString = 
+                    "SELECT Genre_ID, Name " +
+                    "FROM Genres";
 
             var listOfGenres = new List<Genre>();
 
