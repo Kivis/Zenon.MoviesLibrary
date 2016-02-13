@@ -7,7 +7,7 @@
     <ProjectGuid>{727C41CF-55F6-48DF-B068-A71807C6F721}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Zenon.MoviesLibrary.Tests</RootNamespace>
+    <RootNamespace>Zenon.MoviesLibrary.API</RootNamespace>
     <AssemblyName>Zenon.MoviesLibrary.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -43,6 +43,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Database\DirectorsRepositoryTests.cs" />
+    <Compile Include="Database\GenresRepositoryTests.cs" />
+    <Compile Include="Database\LanguagesRepositoryTests.cs" />
     <Compile Include="Database\MoviesRepositoryTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

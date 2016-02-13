@@ -4,16 +4,15 @@ using Zenon.MoviesLibrary.Models;
 
 namespace Zenon.MoviesLibrary.API.Database
 {
-    public class MoviesRepository
+    public class DirectorsRepository
     {
         private const string ConnectionString = @"Data Source=AK-PC\SQLEXPRESS;Initial Catalog=MoviesDatabase;Integrated Security=True;MultipleActiveResultSets=True;Application Name=MoviesLibrary";
-        
-        public Movie GetMovie(int id)
+
+        public Director GetDirector(int id)
         {
             var queryString =
-
-                "SELECT Movie_ID, Title, ReleaseDate, Description, Genre_ID, Director_ID, Language_ID " +
-                "FROM Movies WHERE Movie_ID = " + id;
+                "SELECT Director_ID, FirstName, LastName " +
+                "FROM Directors WHERE Director_ID = " + id;
 
             using (var connection = new SqlConnection(ConnectionString))
             {
@@ -22,21 +21,21 @@ namespace Zenon.MoviesLibrary.API.Database
                 connection.Open();
 
                 SqlDataReader reader = command.ExecuteReader();
-                Movie movie = null;
+                Director director = null;
                 if (reader.Read())
-                    movie = ReadMovie(reader);
+                    director = ReadDirector(reader);
 
                 reader.Close();
 
-                return movie;
+                return director;
             }
         }
 
-        public List<Movie> GetMovies()
+        public List<Director> GetDirectors()
         {
-            var queryString = "SELECT * FROM Movies";
+            var queryString = "SELECT * FROM Directors";
 
-            var listOfMovies = new List<Movie>();
+            var listOfDirectors = new List<Director>();
 
             using (var connection = new SqlConnection(ConnectionString))
             {
@@ -50,28 +49,24 @@ namespace Zenon.MoviesLibrary.API.Database
                 {
                     while (reader.Read())
                     {
-                        var movie = ReadMovie(reader);
-                        listOfMovies.Add(movie);
+                        var director = ReadDirector(reader);
+                        listOfDirectors.Add(director);
                     }
                 }
 
                 reader.Close();
             }
-            return listOfMovies;
+            return listOfDirectors;
         }
-
-        private Movie ReadMovie(SqlDataReader reader)
+        private Director ReadDirector(SqlDataReader reader)
         {
-            return new Movie
+            return new Director
             {
-                MovieId = reader.GetInt32(0),
-                Title = reader.GetString(1),
-                ReleaseDate = reader.GetDateTime(2),
-                Description = reader.GetString(3),
-                GenreId = reader.GetInt32(4),
-                DirectorId = reader.GetInt32(5),
-                LanguageId = reader.GetInt32(6)
+                DirectorId = reader.GetInt32(0),
+                FirstName = reader.GetString(1),
+                LastName = reader.GetString(2),
             };
         }
     }
 }
+

@@ -113,6 +113,10 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Director\" />
+    <Folder Include="Views\Genre\" />
+    <Folder Include="Views\Language\" />
+    <Folder Include="Views\Movies\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -147,12 +151,23 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="Controllers\DirectorsController.cs" />
+    <Compile Include="Controllers\GenresController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\LibraryController.cs" />
+    <Compile Include="Controllers\LanguagesController.cs" />
+    <Compile Include="Controllers\MoviesController.cs" />
+    <Compile Include="Database\DirectorsRepository.cs" />
+    <Compile Include="Database\GenresRepository.cs" />
+    <Compile Include="Database\LanguagesRepository.cs" />
     <Compile Include="Database\MoviesRepository.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Director.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Genre.cs" />
+    <Compile Include="Models\Language.cs" />
     <Compile Include="Models\Movie.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

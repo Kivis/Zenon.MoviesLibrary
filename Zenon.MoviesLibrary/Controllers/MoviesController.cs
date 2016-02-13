@@ -5,19 +5,19 @@ using Zenon.MoviesLibrary.Models;
 
 namespace Zenon.MoviesLibrary.Controllers
 {
-    public class LibraryController : ApiController
+    public class MoviesController : ApiController
     {
-        private readonly LibraryRepository _libraryRepository = new LibraryRepository();
+        private readonly MoviesRepository _moviesRepository = new MoviesRepository();
 
         // GET api/values
-        public List<Library> Get()
+        public List<Movie> Get()
         {
-            return _libraryRepository.GetLibrary();
+            return _moviesRepository.GetMovies();
         }
         // GET api/values/5
-        public void Get(int id)
+        public Movie Get(int id)
         {
-           
+            return _moviesRepository.GetMovie(id);
         }
 
         // POST api/values

@@ -5,7 +5,7 @@ VisualStudioVersion = 12.0.40629.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zenon.MoviesLibrary.API", "Zenon.MoviesLibrary\Zenon.MoviesLibrary.API.csproj", "{CE64118E-233C-4AF0-B4C7-C27840B184C3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zenon.MoviesLibrary.Tests", "Zenon.MoviesLibrary.Tests\Zenon.MoviesLibrary.Tests.csproj", "{727C41CF-55F6-48DF-B068-A71807C6F721}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zenon.MoviesLibrary.API.Tests", "Zenon.MoviesLibrary.Tests\Zenon.MoviesLibrary.API.Tests.csproj", "{727C41CF-55F6-48DF-B068-A71807C6F721}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
