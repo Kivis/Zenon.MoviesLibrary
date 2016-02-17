@@ -17,7 +17,6 @@ app.controller('library', function($scope, $http)
 	
 		$scope.getData = getDataInner;
 	
-	
 		$http.get('http://localhost:32520/api/genres')
 		.success(function (response) {
 			$scope.genres = response;
