@@ -18,5 +18,10 @@ namespace Zenon.MoviesLibrary.Controllers
         {
             return _genresRepository.GetGenre(id);
         }
+        // INSERT: Insert genre name
+        public void Insert(Genre genre)
+        {
+            _genresRepository.InsertGenre(genre);
+        }
     }
 }

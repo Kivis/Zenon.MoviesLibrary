@@ -1,16 +1,17 @@
 ﻿using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Linq;
 using Zenon.MoviesLibrary.Models;
+using System.Configuration;
 
 namespace Zenon.MoviesLibrary.API.Database
 {
     public class MoviesRepository
     {
-        private const string ConnectionString = @"Data Source=AK-PC\SQLEXPRESS;Initial Catalog=MoviesDatabase;Integrated Security=True;MultipleActiveResultSets=True;Application Name=MoviesLibrary";
-        private GenresRepository _genresRepository = new GenresRepository();
-        private LanguagesRepository _languagesRepository = new LanguagesRepository();
-        private DirectorsRepository _directorsRepository = new DirectorsRepository();
+        //private const string ConnectionString = @"Data Source=AK-PC\SQLEXPRESS;Initial Catalog=MoviesDatabase;Integrated Security=True;MultipleActiveResultSets=True;Application Name=MoviesLibrary";
+        private readonly string _connectionString = ConfigurationManager.ConnectionStrings["MoviesLibrary"].ConnectionString;
+        private readonly GenresRepository _genresRepository = new GenresRepository();
+        private readonly LanguagesRepository _languagesRepository = new LanguagesRepository();
+        private readonly DirectorsRepository _directorsRepository = new DirectorsRepository();
 
         public Movie GetMovie(int id)
         {
@@ -18,7 +19,7 @@ namespace Zenon.MoviesLibrary.API.Database
                     "SELECT Movie_ID, Title, ReleaseDate, Description, Genre_ID, Director_ID, Language_ID " +
                     "FROM Movies WHERE Movie_ID = " + id;
 
-            using (var connection = new SqlConnection(ConnectionString))
+            using (var connection = new SqlConnection(_connectionString))
             {
                 var command = new SqlCommand(queryString, connection);
 
@@ -43,7 +44,7 @@ namespace Zenon.MoviesLibrary.API.Database
 
             var listOfMovies = new List<Movie>();
 
-            using (var connection = new SqlConnection(ConnectionString))
+            using (var connection = new SqlConnection(_connectionString))
             {
                 var command = new SqlCommand(queryString, connection);
 
@@ -63,6 +64,21 @@ namespace Zenon.MoviesLibrary.API.Database
                 reader.Close();
             }
             return listOfMovies;
+        }
+
+        public void InsertMovie(Movie movie)
+        {
+            var queryString =
+                   "INSERT INTO Movies (Title, ReleaseDate, Description, Genre_ID, Director_ID, Language_ID) " +
+                   "VALUES ('" + movie.Title + "', '" + movie.ReleaseDate + "', '" + movie.Description + "', '" + movie.Genre.GenreId + "', '" + movie.Director.DirectorId + "', '" + movie.Language.LanguageId + "')";
+
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                var command = new SqlCommand(queryString, connection);
+                connection.Open();
+                command.ExecuteNonQuery();
+                connection.Close();
+            }
         }
 
         private Movie ReadMovie(SqlDataReader reader)

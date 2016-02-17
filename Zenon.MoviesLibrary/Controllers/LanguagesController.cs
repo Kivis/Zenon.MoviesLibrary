@@ -20,6 +20,10 @@ namespace Zenon.MoviesLibrary.Controllers
         {
             return _languagesRepository.GetLanguage(id);
         }
-
+        // INSERT: Insert language name
+        public void Insert(Language language)
+        {
+            _languagesRepository.InsertLanguage(language);
+        }
     }
 }

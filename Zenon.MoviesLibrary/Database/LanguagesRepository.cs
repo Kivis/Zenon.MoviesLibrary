@@ -1,20 +1,20 @@
 ﻿using System.Collections.Generic;
 using System.Data.SqlClient;
 using Zenon.MoviesLibrary.Models;
-
+using System.Configuration;
 namespace Zenon.MoviesLibrary.API.Database
 {
-    public class LanguagesRepository
+    public class LanguagesRepository 
     {
-        private const string ConnectionString = @"Data Source=AK-PC\SQLEXPRESS;Initial Catalog=MoviesDatabase;Integrated Security=True;MultipleActiveResultSets=True;Application Name=MoviesLibrary";
-
+        //private const string _connectionString = @"Data Source=AK-PC\SQLEXPRESS;Initial Catalog=MoviesDatabase;Integrated Security=True;MultipleActiveResultSets=True;Application Name=MoviesLibrary";
+        private readonly string _connectionString = ConfigurationManager.ConnectionStrings["MoviesLibrary"].ConnectionString;
         public Language GetLanguage(int id)
         {
             var queryString =
                     "SELECT Language_ID, Name " +
                     "FROM Languages WHERE Language_ID = " + id;
 
-            using (var connection = new SqlConnection(ConnectionString))
+            using (var connection = new SqlConnection(_connectionString))
             {
                 var command = new SqlCommand(queryString, connection);
 
@@ -39,7 +39,7 @@ namespace Zenon.MoviesLibrary.API.Database
 
             var listOfLanguages = new List<Language>();
 
-            using (var connection = new SqlConnection(ConnectionString))
+            using (var connection = new SqlConnection(_connectionString))
             {
                 var command = new SqlCommand(queryString, connection);
 
@@ -67,6 +67,21 @@ namespace Zenon.MoviesLibrary.API.Database
                 LanguageId = reader.GetInt32(0),
                 Name = reader.GetString(1),
             };
+        }
+
+        public void InsertLanguage(Language language)
+        {
+            var queryString =
+                   "INSERT INTO Languages (Name) " +
+                   "VALUES ('" + language.Name + "')";
+
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                var command = new SqlCommand(queryString, connection);
+                connection.Open();
+                command.ExecuteNonQuery();
+                connection.Close();
+            }
         }
     }
 }

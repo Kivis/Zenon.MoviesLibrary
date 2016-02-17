@@ -23,7 +23,7 @@ namespace Zenon.MoviesLibrary.Models
                 MovieId = this.MovieId,
                 Title = this.Title,
                 ReleaseDate = this.ReleaseDate,
-                Description = this.Description
+                Description = this.Description,
             };
         }
     }

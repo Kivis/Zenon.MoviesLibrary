@@ -20,9 +20,10 @@ namespace Zenon.MoviesLibrary.Controllers
             return _moviesRepository.GetMovie(id);
         }
 
-        // POST api/values
-        public void Post([FromBody]string value)
+        // INSERT: Insert movie
+        public void Insert(Movie movie)
         {
+            _moviesRepository.InsertMovie(movie);
         }
 
         // PUT api/values/5

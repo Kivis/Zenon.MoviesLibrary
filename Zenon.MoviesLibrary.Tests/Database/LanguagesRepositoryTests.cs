@@ -1,5 +1,8 @@
-﻿using NUnit.Framework;
+﻿using System;
+using System.Linq;
+using NUnit.Framework;
 using Zenon.MoviesLibrary.API.Database;
+using Zenon.MoviesLibrary.Models;
 
 namespace Zenon.MoviesLibrary.API.Tests.Database
 {
@@ -25,6 +28,22 @@ namespace Zenon.MoviesLibrary.API.Tests.Database
             var language = repository.GetLanguages();
 
             Assert.That(language.Count > 0);
+        }
+
+        [Test]
+        public void InsertLanguages_NormalFlow()
+        {
+            var repository = new LanguagesRepository();
+
+            var language = new Language() { Name = "MyTestLanguage" + Guid.NewGuid().ToString() };
+
+            repository.InsertLanguage(language);
+
+            var allLanguages = repository.GetLanguages();
+
+            var languageFromDb = allLanguages.FirstOrDefault(g => g.Name == language.Name);
+
+            Assert.That(languageFromDb != null);
         }
     }
 }
