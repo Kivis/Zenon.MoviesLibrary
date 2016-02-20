@@ -24,5 +24,13 @@ namespace Zenon.MoviesLibrary.Controllers
         {
             _directorsRepository.InsertDirector(director);
         }
+
+        // DELETE: DELETE director by id
+        [HttpDelete]
+        public void Delete(int id)
+        {
+            _directorsRepository.DeleteDirectorById(id);
+
+        }
     }
 }

@@ -27,5 +27,12 @@ namespace Zenon.MoviesLibrary.Controllers
             _languagesRepository.InsertLanguage(language);
             
         }
+        // DELETE: DELETE language by id
+        [HttpDelete]
+        public void Delete(int id)
+        {
+            _languagesRepository.DeleteLanguageById(id);
+
+        }
     }
 }

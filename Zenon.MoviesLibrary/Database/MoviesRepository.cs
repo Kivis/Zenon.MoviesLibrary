@@ -115,6 +115,23 @@ namespace Zenon.MoviesLibrary.API.Database
             return movie;
         }
 
+
+        public void DeleteMovieById(int id)
+        {
+            var queryString =
+                "DELETE FROM Movies " +
+                "WHERE " +
+                "Movie_ID = " + id;
+
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                var command = new SqlCommand(queryString, connection);
+                connection.Open();
+                command.ExecuteNonQuery();
+                connection.Close();
+            }
+        }
+
         private void MapGenres(Movie movie, MovieDbModel movieDbModel)
         {
             var genre = _genresRepository.GetGenre(movieDbModel.GenreId);

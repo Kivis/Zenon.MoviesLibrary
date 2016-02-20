@@ -48,6 +48,22 @@ namespace Zenon.MoviesLibrary.API.Tests.Database
             var directorFromDb = allDirectors.FirstOrDefault(g => g.FirstName == director.FirstName);
             Assert.That(directorFromDb != null);
         }
+        [Test]
+        public void DeleteDirectorByID_DeleteById()
+        {
+            var repository = new DirectorsRepository();
+
+            var directorID = 21;
+            var director = new Director() { DirectorId = directorID };
+
+            repository.DeleteDirectorById(21);
+
+            var allLanguages = repository.GetDirectors();
+
+            var genreFromDb = allLanguages.FirstOrDefault(g => g.DirectorId == director.DirectorId);
+
+            Assert.That(genreFromDb == null);
+        }
 
     }
 }

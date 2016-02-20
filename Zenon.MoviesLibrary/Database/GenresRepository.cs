@@ -90,6 +90,22 @@ namespace Zenon.MoviesLibrary.API.Database
                 connection.Close();
             }
         }
+
+        public void DeleteGenreById(int id)
+        {
+            var queryString =
+                "DELETE FROM Genres " +
+                "WHERE " +
+                "Genre_ID = " + id;
+
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                var command = new SqlCommand(queryString, connection);
+                connection.Open();
+                command.ExecuteNonQuery();
+                connection.Close();
+            }
+        }
     }
 }
 

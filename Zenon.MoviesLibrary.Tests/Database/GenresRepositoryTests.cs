@@ -44,5 +44,22 @@ namespace Zenon.MoviesLibrary.API.Tests.Database
 
             Assert.That(genreFromDb != null);
         }
+
+        [Test]
+        public void DeleteGenreByID_DeleteById()
+        {
+            var repository = new GenresRepository();
+
+            var genreID = 26;
+            var genre = new Genre() { GenreId = genreID };
+
+            repository.DeleteGenreById(26);
+
+            var allLanguages = repository.GetGenres();
+
+            var genreFromDb = allLanguages.FirstOrDefault(g => g.GenreId == genre.GenreId);
+
+            Assert.That(genreFromDb == null);
+        }
     }
 }

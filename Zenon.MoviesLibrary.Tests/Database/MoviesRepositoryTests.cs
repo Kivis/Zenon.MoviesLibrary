@@ -52,5 +52,22 @@ namespace Zenon.MoviesLibrary.API.Tests.Database
 
             Assert.That(movieFromDb != null);
         }
+
+        [Test]
+        public void DeleteMovieByID_DeleteById()
+        {
+            var repository = new MoviesRepository();
+
+            var movieID = 22;
+            var movie = new Movie() { MovieId = movieID};
+
+            repository.DeleteMovieById(22);
+
+            var allLanguages = repository.GetMovies();
+
+            var languageFromDb = allLanguages.FirstOrDefault(g => g.MovieId == movie.MovieId);
+
+            Assert.That(languageFromDb == null);
+        }
     }
 }

@@ -18,11 +18,20 @@ namespace Zenon.MoviesLibrary.Controllers
         {
             return _genresRepository.GetGenre(id);
         }
-        [HttpPost]
+
         // INSERT: Insert genre name
+        [HttpPost]
         public void Insert(Genre genre)
         {
             _genresRepository.InsertGenre(genre);
+        }
+
+        // DELETE: DELETE genre by id
+        [HttpDelete]
+        public void Delete(int id)
+        {
+            _genresRepository.DeleteGenreById(id);
+
         }
     }
 }

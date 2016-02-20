@@ -94,6 +94,23 @@ namespace Zenon.MoviesLibrary.API.Database
                 connection.Close();
             }
         }
+
+        public void DeleteDirectorById(int id)
+        {
+            var queryString =
+                "DELETE FROM Directors " +
+                "WHERE " +
+                "Director_ID = " + id;
+
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                var command = new SqlCommand(queryString, connection);
+                connection.Open();
+                command.ExecuteNonQuery();
+                connection.Close();
+            }
+        }
+
     }
 }
 

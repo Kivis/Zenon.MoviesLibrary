@@ -40,6 +40,7 @@ namespace Zenon.MoviesLibrary.Controllers
         [HttpDelete]
         public void Delete(int id)
         {
+            _moviesRepository.DeleteMovieById(id);
         }
     }
 }
