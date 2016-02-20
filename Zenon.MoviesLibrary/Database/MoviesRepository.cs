@@ -69,8 +69,21 @@ namespace Zenon.MoviesLibrary.API.Database
         public void InsertMovie(Movie movie)
         {
             var queryString =
+
+                   "IF NOT EXISTS (SELECT * FROM Movies " +
+                   "WHERE " +
+                   "Title = '" + movie.Title + "' " +
+                   "AND " +
+                   "Description = '" + movie.Description + "') " +
+                   "BEGIN " +
                    "INSERT INTO Movies (Title, ReleaseDate, Description, Genre_ID, Director_ID, Language_ID) " +
-                   "VALUES ('" + movie.Title + "', '" + movie.ReleaseDate + "', '" + movie.Description + "', '" + movie.Genre.GenreId + "', '" + movie.Director.DirectorId + "', '" + movie.Language.LanguageId + "')";
+                   "VALUES ('" + movie.Title + "', " +
+                   "        '" + movie.ReleaseDate + "', " +
+                   "        '" + movie.Description + "', " +
+                   "        '" + movie.Genre.GenreId + "', " +
+                   "        '" + movie.Director.DirectorId + "', " +
+                   "        '" + movie.Language.LanguageId + "') " +
+                   "END";
 
             using (var connection = new SqlConnection(_connectionString))
             {

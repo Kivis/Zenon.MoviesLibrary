@@ -72,8 +72,13 @@ namespace Zenon.MoviesLibrary.API.Database
         public void InsertLanguage(Language language)
         {
             var queryString =
+                   "IF NOT EXISTS (SELECT * FROM Languages " +
+                   "WHERE " +
+                   "Name = '" + language.Name + "') " +
+                   "BEGIN " +
                    "INSERT INTO Languages (Name) " +
-                   "VALUES ('" + language.Name + "')";
+                   "VALUES ('" + language.Name + "')" +
+                    " END";
 
             using (var connection = new SqlConnection(_connectionString))
             {

@@ -75,8 +75,12 @@ namespace Zenon.MoviesLibrary.API.Database
         public void InsertGenre(Genre genre)
         {
             var queryString =
+                   "IF NOT EXISTS (SELECT * FROM Genres " +
+                   "WHERE Name = '" + genre.Name + "') " +
+                   "BEGIN " +
                    "INSERT INTO Genres (Name) " +
-                   "VALUES ('" + genre.Name + "')";
+                   "VALUES ('" + genre.Name + "') " +
+                   "END";
 
             using (var connection = new SqlConnection(_connectionString))
             {

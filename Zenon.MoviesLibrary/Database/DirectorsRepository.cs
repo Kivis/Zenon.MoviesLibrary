@@ -74,8 +74,17 @@ namespace Zenon.MoviesLibrary.API.Database
         public void InsertDirector(Director director)
         {
             var queryString =
+                   "IF NOT EXISTS (SELECT * FROM Directors " +
+                   "WHERE " +
+                   "FirstName = '" + director.FirstName + "' " +
+                   "AND " +
+                   "LastName = '" + director.LastName + "') " +
+                   "BEGIN " +
                    "INSERT INTO Directors (FirstName, LastName) " +
-                   "VALUES ('" + director.FirstName + "', '"+ director.LastName +"' )";
+                   "VALUES ('" + director.FirstName + "', '" + director.LastName + "' )" +
+                   "END";
+
+
 
             using (var connection = new SqlConnection(_connectionString))
             {

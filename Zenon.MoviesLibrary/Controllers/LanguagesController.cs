@@ -25,6 +25,7 @@ namespace Zenon.MoviesLibrary.Controllers
         public void Insert([FromBody]Language language)
         {
             _languagesRepository.InsertLanguage(language);
+            
         }
     }
 }
