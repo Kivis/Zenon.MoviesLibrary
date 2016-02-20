@@ -18,6 +18,7 @@ namespace Zenon.MoviesLibrary.Controllers
         {
             return _directorsRepository.GetDirector(id);
         }
+        [HttpPost]
         // INSERT: Insert director firstName & lastName
         public void Insert(Director director)
         {

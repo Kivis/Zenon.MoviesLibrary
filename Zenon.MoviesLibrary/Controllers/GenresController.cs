@@ -18,6 +18,7 @@ namespace Zenon.MoviesLibrary.Controllers
         {
             return _genresRepository.GetGenre(id);
         }
+        [HttpPost]
         // INSERT: Insert genre name
         public void Insert(Genre genre)
         {
