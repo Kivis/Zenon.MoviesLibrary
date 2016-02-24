@@ -53,10 +53,9 @@ namespace Zenon.MoviesLibrary.API.Tests.Database
         {
             var repository = new DirectorsRepository();
 
-            var directorID = 21;
-            var director = new Director() { DirectorId = directorID };
+            var director = new Director();
 
-            repository.DeleteDirectorById(21);
+            repository.DeleteDirectorById(repository.InsertDirector(director));
 
             var allLanguages = repository.GetDirectors();
 

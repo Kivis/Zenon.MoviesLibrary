@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.SqlClient;
 using Zenon.MoviesLibrary.Models;
 using System.Configuration;
@@ -69,24 +70,19 @@ namespace Zenon.MoviesLibrary.API.Database
             };
         }
 
-        public void InsertLanguage(Language language)
+        public int InsertLanguage(Language language)
         {
-            var queryString =
-                   "IF NOT EXISTS (SELECT * FROM Languages " +
-                   "WHERE " +
-                   "Name = '" + language.Name + "') " +
-                   "BEGIN " +
-                   "INSERT INTO Languages (Name) " +
-                   "VALUES ('" + language.Name + "')" +
-                    " END";
+            var queryString = string.Format("InsertLanguage '{0}'", language.Name);
 
             using (var connection = new SqlConnection(_connectionString))
             {
                 var command = new SqlCommand(queryString, connection);
                 connection.Open();
-                command.ExecuteNonQuery();
+                var returnValue = (int)command.ExecuteScalar();
                 connection.Close();
+                return returnValue;
             }
+          
         }
 
         public void DeleteLanguageById(int id)
@@ -94,7 +90,7 @@ namespace Zenon.MoviesLibrary.API.Database
             var queryString =
                 "DELETE FROM Languages " +
                 "WHERE " +
-                "Language_ID = "+ id;
+                "Language_ID = "+ id ;
 
             using (var connection = new SqlConnection(_connectionString))
             {

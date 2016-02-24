@@ -17,7 +17,8 @@ namespace Zenon.MoviesLibrary.API.Database
         {
             var queryString =
                     "SELECT Movie_ID, Title, ReleaseDate, Description, Genre_ID, Director_ID, Language_ID " +
-                    "FROM Movies WHERE Movie_ID = " + id;
+                    "FROM Movies " +
+                    "WHERE Movie_ID = " + id;
 
             using (var connection = new SqlConnection(_connectionString))
             {
@@ -66,31 +67,23 @@ namespace Zenon.MoviesLibrary.API.Database
             return listOfMovies;
         }
 
-        public void InsertMovie(Movie movie)
+        public int InsertMovie(Movie movie)
         {
-            var queryString =
-
-                   "IF NOT EXISTS (SELECT * FROM Movies " +
-                   "WHERE " +
-                   "Title = '" + movie.Title + "' " +
-                   "AND " +
-                   "Description = '" + movie.Description + "') " +
-                   "BEGIN " +
-                   "INSERT INTO Movies (Title, ReleaseDate, Description, Genre_ID, Director_ID, Language_ID) " +
-                   "VALUES ('" + movie.Title + "', " +
-                   "        '" + movie.ReleaseDate + "', " +
-                   "        '" + movie.Description + "', " +
-                   "        '" + movie.Genre.GenreId + "', " +
-                   "        '" + movie.Director.DirectorId + "', " +
-                   "        '" + movie.Language.LanguageId + "') " +
-                   "END";
+            var queryString = string.Format("InsertMovie '{0}', '{1}', '{2}', {3}, {4}, {5}", 
+                   movie.Title,
+                   movie.ReleaseDate,
+                   movie.Description,
+                   movie.Genre.GenreId,
+                   movie.Director.DirectorId,
+                   movie.Language.LanguageId);
 
             using (var connection = new SqlConnection(_connectionString))
             {
                 var command = new SqlCommand(queryString, connection);
                 connection.Open();
-                command.ExecuteNonQuery();
+                var returnValue = (int)command.ExecuteScalar();
                 connection.Close();
+                return returnValue;
             }
         }
 
@@ -118,10 +111,7 @@ namespace Zenon.MoviesLibrary.API.Database
 
         public void DeleteMovieById(int id)
         {
-            var queryString =
-                "DELETE FROM Movies " +
-                "WHERE " +
-                "Movie_ID = " + id;
+            var queryString = "DELETE FROM Movies WHERE Movie_ID = " + id;
 
             using (var connection = new SqlConnection(_connectionString))
             {

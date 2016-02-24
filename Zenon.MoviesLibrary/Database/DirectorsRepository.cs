@@ -71,27 +71,17 @@ namespace Zenon.MoviesLibrary.API.Database
             };
         }
 
-        public void InsertDirector(Director director)
+        public int InsertDirector(Director director)
         {
-            var queryString =
-                   "IF NOT EXISTS (SELECT * FROM Directors " +
-                   "WHERE " +
-                   "FirstName = '" + director.FirstName + "' " +
-                   "AND " +
-                   "LastName = '" + director.LastName + "') " +
-                   "BEGIN " +
-                   "INSERT INTO Directors (FirstName, LastName) " +
-                   "VALUES ('" + director.FirstName + "', '" + director.LastName + "' )" +
-                   "END";
-
-
+            var queryString = string.Format("InsertDirector '{0}', '{1}'", director.FirstName, director.LastName);
 
             using (var connection = new SqlConnection(_connectionString))
             {
                 var command = new SqlCommand(queryString, connection);
                 connection.Open();
-                command.ExecuteNonQuery();
+                var returnValue = (int)command.ExecuteScalar();
                 connection.Close();
+                return returnValue;
             }
         }
 

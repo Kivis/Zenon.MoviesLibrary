@@ -2,6 +2,7 @@
 using System.Configuration;
 using System.Data.SqlClient;
 using System.Diagnostics.Eventing.Reader;
+using System.Runtime.InteropServices.WindowsRuntime;
 using Zenon.MoviesLibrary.Models;
 
 namespace Zenon.MoviesLibrary.API.Database
@@ -72,22 +73,17 @@ namespace Zenon.MoviesLibrary.API.Database
             };
         }
 
-        public void InsertGenre(Genre genre)
+        public int InsertGenre(Genre genre)
         {
-            var queryString =
-                   "IF NOT EXISTS (SELECT * FROM Genres " +
-                   "WHERE Name = '" + genre.Name + "') " +
-                   "BEGIN " +
-                   "INSERT INTO Genres (Name) " +
-                   "VALUES ('" + genre.Name + "') " +
-                   "END";
+            var queryString = string.Format("InsertGenre '{0}'",  genre.Name);
 
             using (var connection = new SqlConnection(_connectionString))
             {
                 var command = new SqlCommand(queryString, connection);
                 connection.Open();
-                command.ExecuteNonQuery();
+                var returnValue = (int)command.ExecuteScalar();
                 connection.Close();
+                return returnValue;
             }
         }
 

@@ -32,16 +32,18 @@ namespace Zenon.MoviesLibrary.API.Tests.Database
         [Test]
         public void InsertMovies_NormalFlow()
         {
+            
             var repository = new MoviesRepository();
 
 
             var movie = new Movie()
             {
                 Title = "TestMovie " + Guid.NewGuid().ToString(),
+                ReleaseDate = DateTime.Now,
                 Description = "MyTestMovieDescription",
                 Genre = new Genre { GenreId = 1 },
-                Director = new Director { DirectorId = 1 },
-                Language = new Language { LanguageId = 1 }
+                Director = new Director { DirectorId = 1},
+                Language = new Language { LanguageId = 1}
             };
 
             repository.InsertMovie(movie);
@@ -58,10 +60,9 @@ namespace Zenon.MoviesLibrary.API.Tests.Database
         {
             var repository = new MoviesRepository();
 
-            var movieID = 22;
-            var movie = new Movie() { MovieId = movieID};
+            var movie = new Movie() {MovieId = 42};
 
-            repository.DeleteMovieById(22);
+            repository.DeleteMovieById(repository.InsertMovie(movie));
 
             var allLanguages = repository.GetMovies();
 

@@ -50,10 +50,9 @@ namespace Zenon.MoviesLibrary.API.Tests.Database
         {
             var repository = new GenresRepository();
 
-            var genreID = 26;
-            var genre = new Genre() { GenreId = genreID };
+            var genre = new Genre();
 
-            repository.DeleteGenreById(26);
+            repository.DeleteGenreById(repository.InsertGenre(genre));
 
             var allLanguages = repository.GetGenres();
 

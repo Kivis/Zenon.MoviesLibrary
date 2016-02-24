@@ -35,7 +35,7 @@ namespace Zenon.MoviesLibrary.API.Tests.Database
         {
             var repository = new LanguagesRepository();
 
-            var language = new Language() { Name = "MyTestLanguage" + Guid.NewGuid().ToString() };
+            var language = new Language() { Name = "MyTestLanguages" + Guid.NewGuid().ToString() };
 
             repository.InsertLanguage(language);
 
@@ -51,10 +51,9 @@ namespace Zenon.MoviesLibrary.API.Tests.Database
         {
             var repository = new LanguagesRepository();
 
-            var languageID = 11;
-            var language = new Language() { LanguageId = languageID };
-        
-            repository.DeleteLanguageById(11);
+            var language = new Language();
+            
+            repository.DeleteLanguageById(repository.InsertLanguage(language));
 
             var allLanguages = repository.GetLanguages();
 
