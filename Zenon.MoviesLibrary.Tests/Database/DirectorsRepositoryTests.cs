@@ -42,8 +42,8 @@ namespace Zenon.MoviesLibrary.API.Tests.Database
             };
 
             director.DirectorId = repository.InsertDirector(director);
-            var newRecord = repository.GetDirector(director.DirectorId);
 
+            var newRecord = repository.GetDirector(director.DirectorId);
             director.ShouldBeEquivalentTo(newRecord);
         }
         [Test]
@@ -53,13 +53,17 @@ namespace Zenon.MoviesLibrary.API.Tests.Database
 
             var director = new Director() {FirstName = "Delete", LastName = "Test"};
 
-            repository.DeleteDirectorById(repository.InsertDirector(director));
+            var idOfInsertedMovie = repository.InsertDirector(director);
+            repository.DeleteDirectorById(idOfInsertedMovie);
 
-            var allLanguages = repository.GetDirectors();
+            var getId = repository.GetDirector(idOfInsertedMovie);
+            Assert.That(getId == null);
 
-            var genreFromDb = allLanguages.FirstOrDefault(g => g.DirectorId == director.DirectorId);
+            //var allLanguages = repository.GetDirectors();
 
-            Assert.That(genreFromDb == null);
+            //var genreFromDb = allLanguages.FirstOrDefault(g => g.DirectorId == director.DirectorId);
+            //Assert.That(genreFromDb == null);
+
         }
 
     }

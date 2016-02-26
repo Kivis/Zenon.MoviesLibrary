@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework;
 using System;
 using System.Linq;
+using FluentAssertions;
 using Zenon.MoviesLibrary.API.Database;
 using Zenon.MoviesLibrary.Models;
 
@@ -35,14 +36,11 @@ namespace Zenon.MoviesLibrary.API.Tests.Database
             var repository = new GenresRepository();
 
             var genre = new Genre() { Name = "MyTestGenre" + Guid.NewGuid().ToString() };
+        
+            genre.GenreId = repository.InsertGenre(genre);
 
-            repository.InsertGenre(genre);
-
-            var allGenres = repository.GetGenres();
-
-            var genreFromDb = allGenres.FirstOrDefault(g => g.Name == genre.Name);
-
-            Assert.That(genreFromDb != null);
+            var newRecord = repository.GetGenre(genre.GenreId);
+            genre.ShouldBeEquivalentTo(newRecord);
         }
 
         [Test]
@@ -52,13 +50,17 @@ namespace Zenon.MoviesLibrary.API.Tests.Database
 
             var genre = new Genre() {Name = "DeleteTest"};
 
-            repository.DeleteGenreById(repository.InsertGenre(genre));
+            var idOfInsertedGenre = repository.InsertGenre(genre);
+            repository.DeleteGenreById(idOfInsertedGenre);
 
-            var allLanguages = repository.GetGenres();
+            var getId = repository.GetGenre(idOfInsertedGenre);
+            Assert.That(getId == null);
 
-            var genreFromDb = allLanguages.FirstOrDefault(g => g.GenreId == genre.GenreId);
+            //var allLanguages = repository.GetGenres();
 
-            Assert.That(genreFromDb == null);
+            //var genreFromDb = allLanguages.FirstOrDefault(g => g.Name == genre.Name);
+
+            //Assert.That(genreFromDb == null);
         }
     }
 }

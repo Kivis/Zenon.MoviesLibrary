@@ -72,14 +72,16 @@ namespace Zenon.MoviesLibrary.API.Tests.Database
             };
 
             var idOfInsertedMovie = repository.InsertMovie(movie);
-
             repository.DeleteMovieById(idOfInsertedMovie);
 
-            var allLanguages = repository.GetMovies();
+            var getId = repository.GetMovie(idOfInsertedMovie);
+            Assert.That(getId == null);
 
-            var languageFromDb = allLanguages.FirstOrDefault(g => g.MovieId == movie.MovieId);
+            //var allLanguages = repository.GetMovies();
 
-            Assert.That(languageFromDb == null);
+            //var languageFromDb = allLanguages.FirstOrDefault(g => g.MovieId == movie.MovieId);
+
+            //Assert.That(languageFromDb == null);
         }
     }
 }

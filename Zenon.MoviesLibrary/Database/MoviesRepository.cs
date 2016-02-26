@@ -7,7 +7,6 @@ namespace Zenon.MoviesLibrary.API.Database
 {
     public class MoviesRepository
     {
-        //private const string ConnectionString = @"Data Source=AK-PC\SQLEXPRESS;Initial Catalog=MoviesDatabase;Integrated Security=True;MultipleActiveResultSets=True;Application Name=MoviesLibrary";
         private readonly string _connectionString = ConfigurationManager.ConnectionStrings["MoviesLibrary"].ConnectionString;
         private readonly GenresRepository _genresRepository = new GenresRepository();
         private readonly LanguagesRepository _languagesRepository = new LanguagesRepository();
