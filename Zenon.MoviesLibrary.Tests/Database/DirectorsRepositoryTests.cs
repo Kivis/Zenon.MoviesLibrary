@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using FluentAssertions;
 using NUnit.Framework;
 using Zenon.MoviesLibrary.API.Database;
 using Zenon.MoviesLibrary.Models;
@@ -34,26 +35,23 @@ namespace Zenon.MoviesLibrary.API.Tests.Database
         public void InsertDirector_NormalFlow()
         {
             var repository = new DirectorsRepository();
-
             var director = new Director()
             {
                 FirstName = "MyTest" + Guid.NewGuid().ToString(),
                 LastName = "MyTest" + Guid.NewGuid().ToString()
             };
-           
-            repository.InsertDirector(director);
 
-            var allDirectors = repository.GetDirectors();
+            director.DirectorId = repository.InsertDirector(director);
+            var newRecord = repository.GetDirector(director.DirectorId);
 
-            var directorFromDb = allDirectors.FirstOrDefault(g => g.FirstName == director.FirstName);
-            Assert.That(directorFromDb != null);
+            director.ShouldBeEquivalentTo(newRecord);
         }
         [Test]
         public void DeleteDirectorByID_DeleteById()
         {
             var repository = new DirectorsRepository();
 
-            var director = new Director();
+            var director = new Director() {FirstName = "Delete", LastName = "Test"};
 
             repository.DeleteDirectorById(repository.InsertDirector(director));
 

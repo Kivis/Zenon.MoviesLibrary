@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework;
 using System;
 using System.Linq;
+using System.Linq.Expressions;
 using Zenon.MoviesLibrary.API.Database;
 using Zenon.MoviesLibrary.Models;
 
@@ -60,9 +61,19 @@ namespace Zenon.MoviesLibrary.API.Tests.Database
         {
             var repository = new MoviesRepository();
 
-            var movie = new Movie() {MovieId = 42};
+            var movie = new Movie()
+            {
+                Title = "TestMovie " + Guid.NewGuid().ToString(),
+                ReleaseDate = DateTime.Now,
+                Description = "MyTestMovieDescription",
+                Genre = new Genre() {GenreId = 1},
+                Director = new Director() { DirectorId = 1 },
+                Language = new Language() { LanguageId = 1 }
+            };
 
-            repository.DeleteMovieById(repository.InsertMovie(movie));
+            var idOfInsertedMovie = repository.InsertMovie(movie);
+
+            repository.DeleteMovieById(idOfInsertedMovie);
 
             var allLanguages = repository.GetMovies();
 

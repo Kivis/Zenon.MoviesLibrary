@@ -51,7 +51,7 @@ namespace Zenon.MoviesLibrary.API.Tests.Database
         {
             var repository = new LanguagesRepository();
 
-            var language = new Language();
+            var language = new Language() {Name = "DeleteTest"};
             
             repository.DeleteLanguageById(repository.InsertLanguage(language));
 

@@ -82,7 +82,6 @@ namespace Zenon.MoviesLibrary.API.Database
                 connection.Close();
                 return returnValue;
             }
-          
         }
 
         public void DeleteLanguageById(int id)

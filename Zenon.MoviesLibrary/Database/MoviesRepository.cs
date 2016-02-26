@@ -69,13 +69,14 @@ namespace Zenon.MoviesLibrary.API.Database
 
         public int InsertMovie(Movie movie)
         {
-            var queryString = string.Format("InsertMovie '{0}', '{1}', '{2}', {3}, {4}, {5}", 
-                   movie.Title,
-                   movie.ReleaseDate,
-                   movie.Description,
-                   movie.Genre.GenreId,
-                   movie.Director.DirectorId,
-                   movie.Language.LanguageId);
+            // todo fix sql injection problem
+            var queryString = $"InsertMovie '" +
+                              $"{movie.Title}', '" +
+                              $"{movie.ReleaseDate}', '" +
+                              $"{movie.Description}', " +
+                              $"{movie.Genre.GenreId}, " +
+                              $"{movie.Director.DirectorId}, " +
+                              $"{movie.Language.LanguageId}";
 
             using (var connection = new SqlConnection(_connectionString))
             {
@@ -86,6 +87,8 @@ namespace Zenon.MoviesLibrary.API.Database
                 return returnValue;
             }
         }
+
+
 
         private Movie ReadMovie(SqlDataReader reader)
         {
