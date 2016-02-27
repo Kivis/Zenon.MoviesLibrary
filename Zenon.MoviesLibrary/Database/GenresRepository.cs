@@ -1,9 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
-using System.Diagnostics.Eventing.Reader;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Zenon.MoviesLibrary.Models;
+using Zenon.MoviesLibrary.API.Models;
 
 namespace Zenon.MoviesLibrary.API.Database
 {

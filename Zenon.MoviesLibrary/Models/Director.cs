@@ -1,5 +1,5 @@
 ﻿
-namespace Zenon.MoviesLibrary.Models
+namespace Zenon.MoviesLibrary.API.Models
 {
     public class Director
     {

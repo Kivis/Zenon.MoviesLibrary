@@ -1,21 +1,20 @@
 ﻿using NUnit.Framework;
 using System;
-using System.Linq;
 using FluentAssertions;
 using Zenon.MoviesLibrary.API.Database;
-using Zenon.MoviesLibrary.Models;
+using Zenon.MoviesLibrary.API.Models;
 
 namespace Zenon.MoviesLibrary.API.Tests.Database
 {
     [TestFixture]
     public class GenresRepositoryTests
     {
+        private readonly GenresRepository _genresRepository = new GenresRepository();
+
         [Test]
         public void GetGenre_GetsGenreWithIdOne()
         {
-            var repository = new GenresRepository();
-
-            var genre = repository.GetGenre(1);
+            var genre = _genresRepository.GetGenre(1);
 
             Assert.AreNotEqual(null, genre);
         }
@@ -23,9 +22,7 @@ namespace Zenon.MoviesLibrary.API.Tests.Database
         [Test]
         public void GetGenres_NormalFlow()
         {
-            var repository = new GenresRepository();
-
-            var genre = repository.GetGenres();
+            var genre = _genresRepository.GetGenres();
 
             Assert.That(genre.Count > 0);
         }
@@ -33,34 +30,24 @@ namespace Zenon.MoviesLibrary.API.Tests.Database
         [Test]
         public void InsertGenre_NormalFlow()
         {
-            var repository = new GenresRepository();
-
             var genre = new Genre() { Name = "MyTestGenre" + Guid.NewGuid().ToString() };
         
-            genre.GenreId = repository.InsertGenre(genre);
+            genre.GenreId = _genresRepository.InsertGenre(genre);
+            var newRecord = _genresRepository.GetGenre(genre.GenreId);
 
-            var newRecord = repository.GetGenre(genre.GenreId);
             genre.ShouldBeEquivalentTo(newRecord);
         }
 
         [Test]
         public void DeleteGenreByID_DeleteById()
         {
-            var repository = new GenresRepository();
-
             var genre = new Genre() {Name = "DeleteTest"};
 
-            var idOfInsertedGenre = repository.InsertGenre(genre);
-            repository.DeleteGenreById(idOfInsertedGenre);
+            var idOfInsertedGenre = _genresRepository.InsertGenre(genre);
+            _genresRepository.DeleteGenreById(idOfInsertedGenre);
+            var retrievedRecord = _genresRepository.GetGenre(idOfInsertedGenre);
 
-            var getId = repository.GetGenre(idOfInsertedGenre);
-            Assert.That(getId == null);
-
-            //var allLanguages = repository.GetGenres();
-
-            //var genreFromDb = allLanguages.FirstOrDefault(g => g.Name == genre.Name);
-
-            //Assert.That(genreFromDb == null);
+            Assert.AreEqual(null, retrievedRecord);
         }
     }
 }

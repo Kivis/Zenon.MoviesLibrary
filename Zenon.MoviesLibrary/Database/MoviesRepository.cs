@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Data.SqlClient;
-using Zenon.MoviesLibrary.Models;
 using System.Configuration;
+using Zenon.MoviesLibrary.API.Models;
 
 namespace Zenon.MoviesLibrary.API.Database
 {

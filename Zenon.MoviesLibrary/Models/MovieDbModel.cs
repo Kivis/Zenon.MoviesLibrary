@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Zenon.MoviesLibrary.Models
+namespace Zenon.MoviesLibrary.API.Models
 {
     public class MovieDbModel
     {
@@ -18,12 +14,12 @@ namespace Zenon.MoviesLibrary.Models
 
         public Movie GetMovieCore()
         {
-            return new Movie()
+            return new Movie
             {
-                MovieId = this.MovieId,
-                Title = this.Title,
-                ReleaseDate = this.ReleaseDate,
-                Description = this.Description,
+                MovieId = MovieId,
+                Title = Title,
+                ReleaseDate = ReleaseDate,
+                Description = Description
             };
         }
     }

@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Web.Http;
 using Zenon.MoviesLibrary.API.Database;
-using Zenon.MoviesLibrary.Models;
+using Zenon.MoviesLibrary.API.Models;
 
-namespace Zenon.MoviesLibrary.Controllers
+namespace Zenon.MoviesLibrary.API.Controllers
 {
     public class DirectorsController : ApiController
     {

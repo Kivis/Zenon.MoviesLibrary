@@ -1,21 +1,20 @@
 ﻿using NUnit.Framework;
 using System;
-using System.Linq;
-using System.Linq.Expressions;
+using FluentAssertions;
 using Zenon.MoviesLibrary.API.Database;
-using Zenon.MoviesLibrary.Models;
+using Zenon.MoviesLibrary.API.Models;
 
 namespace Zenon.MoviesLibrary.API.Tests.Database
 {
     [TestFixture]
     public class MoviesRepositoryTests
     {
+        private readonly MoviesRepository _moviesRepository = new MoviesRepository();
+
         [Test]
         public void GetMovie_GetsMovieWithIdOne()
         {
-            var repository = new MoviesRepository();
-
-            var movie = repository.GetMovie(1);
+            var movie = _moviesRepository.GetMovie(1);
 
             Assert.AreNotEqual(null, movie);
         }
@@ -23,9 +22,7 @@ namespace Zenon.MoviesLibrary.API.Tests.Database
         [Test]
         public void GetMovies_NormalFlow()
         {
-            var repository = new MoviesRepository();
-
-            var movie = repository.GetMovies();
+            var movie = _moviesRepository.GetMovies();
 
             Assert.That(movie.Count > 0);
         }
@@ -33,55 +30,40 @@ namespace Zenon.MoviesLibrary.API.Tests.Database
         [Test]
         public void InsertMovies_NormalFlow()
         {
-            
-            var repository = new MoviesRepository();
-
-
             var movie = new Movie()
             {
-                Title = "TestMovie " + Guid.NewGuid().ToString(),
-                ReleaseDate = DateTime.Now,
-                Description = "MyTestMovieDescription",
-                Genre = new Genre { GenreId = 1 },
-                Director = new Director { DirectorId = 1},
-                Language = new Language { LanguageId = 1}
+                Title = "TestTitle " + Guid.NewGuid().ToString(),
+                ReleaseDate = DateTime.Parse("2016-02-28"),
+                Description = "TestDescription",
+                Genre = new Genre { GenreId = 1, Name = "Action"},
+                Director = new Director { DirectorId = 1, FirstName = "Tim", LastName = "Miller"},
+                Language = new Language { LanguageId = 1, Name = "English"}
             };
 
-            repository.InsertMovie(movie);
+            movie.MovieId = _moviesRepository.InsertMovie(movie);
+            var newRecord = _moviesRepository.GetMovie(movie.MovieId);
 
-            var allMovies = repository.GetMovies();
-
-            var movieFromDb = allMovies.FirstOrDefault(g => g.Title == movie.Title);
-
-            Assert.That(movieFromDb != null);
+            movie.ShouldBeEquivalentTo(newRecord);
         }
 
         [Test]
         public void DeleteMovieByID_DeleteById()
         {
-            var repository = new MoviesRepository();
-
             var movie = new Movie()
             {
-                Title = "TestMovie " + Guid.NewGuid().ToString(),
+                Title = "TestTitle " + Guid.NewGuid().ToString(),
                 ReleaseDate = DateTime.Now,
-                Description = "MyTestMovieDescription",
+                Description = "Test Description",
                 Genre = new Genre() {GenreId = 1},
                 Director = new Director() { DirectorId = 1 },
                 Language = new Language() { LanguageId = 1 }
             };
 
-            var idOfInsertedMovie = repository.InsertMovie(movie);
-            repository.DeleteMovieById(idOfInsertedMovie);
+            var idOfInsertedMovie = _moviesRepository.InsertMovie(movie);
+            _moviesRepository.DeleteMovieById(idOfInsertedMovie);
+            var retrievedRecord = _moviesRepository.GetMovie(idOfInsertedMovie);
 
-            var getId = repository.GetMovie(idOfInsertedMovie);
-            Assert.That(getId == null);
-
-            //var allLanguages = repository.GetMovies();
-
-            //var languageFromDb = allLanguages.FirstOrDefault(g => g.MovieId == movie.MovieId);
-
-            //Assert.That(languageFromDb == null);
+            Assert.AreEqual(null, retrievedRecord);
         }
     }
 }
