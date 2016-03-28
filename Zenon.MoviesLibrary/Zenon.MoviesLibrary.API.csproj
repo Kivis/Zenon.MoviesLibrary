@@ -157,6 +157,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LanguagesController.cs" />
     <Compile Include="Controllers\MoviesController.cs" />
+    <Compile Include="Database\BaseRepository.cs" />
     <Compile Include="Database\DirectorsRepository.cs" />
     <Compile Include="Database\GenresRepository.cs" />
     <Compile Include="Database\LanguagesRepository.cs" />

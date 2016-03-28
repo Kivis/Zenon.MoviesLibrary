@@ -5,7 +5,7 @@ using Zenon.MoviesLibrary.API.Models;
 
 namespace Zenon.MoviesLibrary.API.Database
 {
-    public class GenresRepository
+    public class GenresRepository : BaseRepository
     {
         private readonly string _connectionString = ConfigurationManager.ConnectionStrings["MoviesLibrary"].ConnectionString;
         public Genre GetGenre(int id)
@@ -70,18 +70,10 @@ namespace Zenon.MoviesLibrary.API.Database
             };
         }
 
-        public int InsertGenre(Genre genre)
+        public void InsertGenre(Genre genre)
         {
             var queryString = string.Format("InsertGenre '{0}'",  genre.Name);
-
-            using (var connection = new SqlConnection(_connectionString))
-            {
-                var command = new SqlCommand(queryString, connection);
-                connection.Open();
-                var returnValue = (int)command.ExecuteScalar();
-                connection.Close();
-                return returnValue;
-            }
+            InsertionConnection(queryString);
         }
 
         public void DeleteGenreById(int id)
@@ -91,13 +83,7 @@ namespace Zenon.MoviesLibrary.API.Database
                 "WHERE " +
                 "Genre_ID = " + id;
 
-            using (var connection = new SqlConnection(_connectionString))
-            {
-                var command = new SqlCommand(queryString, connection);
-                connection.Open();
-                command.ExecuteNonQuery();
-                connection.Close();
-            }
+            DeleteConnection(queryString);
         }
     }
 }

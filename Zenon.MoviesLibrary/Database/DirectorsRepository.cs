@@ -1,13 +1,13 @@
 ﻿using System.Collections.Generic;
-using System.Configuration;
 using System.Data.SqlClient;
 using Zenon.MoviesLibrary.API.Models;
 
 namespace Zenon.MoviesLibrary.API.Database
 {
-    public class DirectorsRepository
+    public class DirectorsRepository : BaseRepository
     {
-        private readonly string _connectionString = ConfigurationManager.ConnectionStrings["MoviesLibrary"].ConnectionString;
+        
+        
         public Director GetDirector(int id)
         {
             var queryString =
@@ -70,18 +70,10 @@ namespace Zenon.MoviesLibrary.API.Database
             };
         }
 
-        public int InsertDirector(Director director)
+        public void InsertDirector(Director director)
         {
             var queryString = string.Format("InsertDirector '{0}', '{1}'", director.FirstName, director.LastName);
-
-            using (var connection = new SqlConnection(_connectionString))
-            {
-                var command = new SqlCommand(queryString, connection);
-                connection.Open();
-                var returnValue = (int)command.ExecuteScalar();
-                connection.Close();
-                return returnValue;
-            }
+            InsertionConnection(queryString);
         }
 
         public void DeleteDirectorById(int id)
@@ -91,13 +83,7 @@ namespace Zenon.MoviesLibrary.API.Database
                 "WHERE " +
                 "Director_ID = " + id;
 
-            using (var connection = new SqlConnection(_connectionString))
-            {
-                var command = new SqlCommand(queryString, connection);
-                connection.Open();
-                command.ExecuteNonQuery();
-                connection.Close();
-            }
+            DeleteConnection(queryString);
         }
 
     }
