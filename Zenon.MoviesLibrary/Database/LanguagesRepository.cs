@@ -1,20 +1,18 @@
 ﻿using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Configuration;
 using Zenon.MoviesLibrary.API.Models;
 
 namespace Zenon.MoviesLibrary.API.Database
 {
     public class LanguagesRepository : BaseRepository
     {
-        private readonly string _connectionString = ConfigurationManager.ConnectionStrings["MoviesLibrary"].ConnectionString;
         public Language GetLanguage(int id)
         {
             var queryString =
                     "SELECT Language_ID, Name " +
                     "FROM Languages WHERE Language_ID = " + id;
 
-            using (var connection = new SqlConnection(_connectionString))
+            using (var connection = new SqlConnection(ConnectionString))
             {
                 var command = new SqlCommand(queryString, connection);
 
@@ -39,7 +37,7 @@ namespace Zenon.MoviesLibrary.API.Database
 
             var listOfLanguages = new List<Language>();
 
-            using (var connection = new SqlConnection(_connectionString))
+            using (var connection = new SqlConnection(ConnectionString))
             {
                 var command = new SqlCommand(queryString, connection);
 
@@ -69,10 +67,10 @@ namespace Zenon.MoviesLibrary.API.Database
             };
         }
 
-        public void InsertLanguage(Language language)
+        public int InsertLanguage(Language language)
         {
             var queryString = string.Format("InsertLanguage '{0}'", language.Name);
-            InsertionConnection(queryString);
+            return ConnectionOfInsert(queryString);
         }
 
         public void DeleteLanguageById(int id)
@@ -82,7 +80,7 @@ namespace Zenon.MoviesLibrary.API.Database
                 "WHERE " +
                 "Language_ID = "+ id ;
 
-            DeleteConnection(queryString);
+            ConnectionOfDelete(queryString);
         }
     }
 }

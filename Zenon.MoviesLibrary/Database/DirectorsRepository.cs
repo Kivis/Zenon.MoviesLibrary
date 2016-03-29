@@ -6,15 +6,13 @@ namespace Zenon.MoviesLibrary.API.Database
 {
     public class DirectorsRepository : BaseRepository
     {
-        
-        
         public Director GetDirector(int id)
         {
             var queryString =
                     "SELECT Director_ID, FirstName, LastName " +
                     "FROM Directors WHERE Director_ID = " + id;
 
-            using (var connection = new SqlConnection(_connectionString))
+            using (var connection = new SqlConnection(ConnectionString))
             {
                 var command = new SqlCommand(queryString, connection);
 
@@ -39,7 +37,7 @@ namespace Zenon.MoviesLibrary.API.Database
 
             var listOfDirectors = new List<Director>();
 
-            using (var connection = new SqlConnection(_connectionString))
+            using (var connection = new SqlConnection(ConnectionString))
             {
                 var command = new SqlCommand(queryString, connection);
 
@@ -70,10 +68,10 @@ namespace Zenon.MoviesLibrary.API.Database
             };
         }
 
-        public void InsertDirector(Director director)
+        public int InsertDirector(Director director)
         {
             var queryString = string.Format("InsertDirector '{0}', '{1}'", director.FirstName, director.LastName);
-            InsertionConnection(queryString);
+            return ConnectionOfInsert(queryString);
         }
 
         public void DeleteDirectorById(int id)
@@ -83,7 +81,7 @@ namespace Zenon.MoviesLibrary.API.Database
                 "WHERE " +
                 "Director_ID = " + id;
 
-            DeleteConnection(queryString);
+            ConnectionOfDelete(queryString);
         }
 
     }

@@ -1,13 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Configuration;
+
 using Zenon.MoviesLibrary.API.Models;
 
 namespace Zenon.MoviesLibrary.API.Database
 {
-    public class MoviesRepository
+    public class MoviesRepository : BaseRepository
     {
-        private readonly string _connectionString = ConfigurationManager.ConnectionStrings["MoviesLibrary"].ConnectionString;
+        
         private readonly GenresRepository _genresRepository = new GenresRepository();
         private readonly LanguagesRepository _languagesRepository = new LanguagesRepository();
         private readonly DirectorsRepository _directorsRepository = new DirectorsRepository();
@@ -19,7 +19,7 @@ namespace Zenon.MoviesLibrary.API.Database
                     "FROM Movies " +
                     "WHERE Movie_ID = " + id;
 
-            using (var connection = new SqlConnection(_connectionString))
+            using (var connection = new SqlConnection(ConnectionString))
             {
                 var command = new SqlCommand(queryString, connection);
 
@@ -44,7 +44,7 @@ namespace Zenon.MoviesLibrary.API.Database
 
             var listOfMovies = new List<Movie>();
 
-            using (var connection = new SqlConnection(_connectionString))
+            using (var connection = new SqlConnection(ConnectionString))
             {
                 var command = new SqlCommand(queryString, connection);
 
@@ -77,14 +77,7 @@ namespace Zenon.MoviesLibrary.API.Database
                               $"{movie.Director.DirectorId}, " +
                               $"{movie.Language.LanguageId}";
 
-            using (var connection = new SqlConnection(_connectionString))
-            {
-                var command = new SqlCommand(queryString, connection);
-                connection.Open();
-                var returnValue = (int)command.ExecuteScalar();
-                connection.Close();
-                return returnValue;
-            }
+            return ConnectionOfInsert(queryString);
         }
 
 
@@ -114,14 +107,7 @@ namespace Zenon.MoviesLibrary.API.Database
         public void DeleteMovieById(int id)
         {
             var queryString = "DELETE FROM Movies WHERE Movie_ID = " + id;
-
-            using (var connection = new SqlConnection(_connectionString))
-            {
-                var command = new SqlCommand(queryString, connection);
-                connection.Open();
-                command.ExecuteNonQuery();
-                connection.Close();
-            }
+            ConnectionOfDelete(queryString);
         }
 
         private void MapGenres(Movie movie, MovieDbModel movieDbModel)

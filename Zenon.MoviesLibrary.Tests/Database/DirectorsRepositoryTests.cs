@@ -32,7 +32,6 @@ namespace Zenon.MoviesLibrary.API.Tests.Database
                 FirstName = "TestFirstName" + Guid.NewGuid().ToString(),
                 LastName = "TestLastName" + Guid.NewGuid().ToString()
             };
-
             director.DirectorId = _directorsRepository.InsertDirector(director);
             var newRecord = _directorsRepository.GetDirector(director.DirectorId);
 
