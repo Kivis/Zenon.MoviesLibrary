@@ -24,16 +24,13 @@ namespace Zenon.MoviesLibrary.API.Database
             };
         }
 
-
-        public Genre[] Get(int[] ids)
+        public List<Genre> Get()
         {
             var queryString =
                      "SELECT Genre_ID, Name " +
                      "FROM Genres";
 
-            var listOfGenres = new List<Genre>();
-           
-            return Get(queryString);
+            return GetItems(queryString, MapGenre);
         }
 
         //public void Delete()

@@ -15,5 +15,14 @@ namespace Zenon.MoviesLibrary.API.Tests.Database
 
             Assert.AreNotEqual(null, genre);
         }
+
+        [Test]
+        public void GetGenres_NormalFlow()
+        {
+            var genre = _genresRepository2.Get();
+
+            Assert.That(genre.Count > 0);
+        }
+
     }
 }

@@ -71,7 +71,9 @@ namespace Zenon.MoviesLibrary.API.Database
         public int InsertDirector(Director director)
         {
             var queryString = string.Format("InsertDirector '{0}', '{1}'", director.FirstName, director.LastName);
-            return Execute(queryString);
+            return Insert(queryString);
+            
+            
         }
 
         public void DeleteDirectorById(int id)
@@ -81,8 +83,7 @@ namespace Zenon.MoviesLibrary.API.Database
                 "WHERE " +
                 "Director_ID = " + id;
 
-            RowsAffectedByDelete(queryString);
-            
+            DeleteRow(queryString);
         }
 
     }

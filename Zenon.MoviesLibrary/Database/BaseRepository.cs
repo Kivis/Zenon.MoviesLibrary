@@ -42,23 +42,23 @@ namespace Zenon.MoviesLibrary.API.Database
             }
         }
 
-        public void Execute(string queryString, Operation operation)
-        {
-            using (var connection = GetConnection())
-            {
-                var command = new SqlCommand(queryString, connection);
-                connection.Open();
-                if (operation == Operation.Insert)
-                {
-                    var returnValue = (int)command.ExecuteScalar();
-                }
-                else if (operation == Operation.Delete)
-                {
-                    command.ExecuteNonQuery();
-                }
-                connection.Close();
-            }
-        }
+        //public void Execute(string queryString, Operation operation)
+        //{
+        //    using (var connection = GetConnection())
+        //    {
+        //        var command = new SqlCommand(queryString, connection);
+        //        connection.Open();
+        //        if (operation == Operation.Insert)
+        //        {
+        //            var returnValue = (int)command.ExecuteScalar();
+        //        }
+        //        else if (operation == Operation.Delete)
+        //        {
+        //            command.ExecuteNonQuery();
+        //        }
+        //        connection.Close();
+        //    }
+        //}
 
     }
 
