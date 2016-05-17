@@ -71,7 +71,8 @@ namespace Zenon.MoviesLibrary.API.Database
         public int InsertGenre(Genre genre)
         {
             var queryString = string.Format("InsertGenre '{0}'",  genre.Name);
-            return ConnectionOfInsert(queryString);
+            return Execute(queryString);
+            
         }
 
         public void DeleteGenreById(int id)
@@ -81,7 +82,7 @@ namespace Zenon.MoviesLibrary.API.Database
                 "WHERE " +
                 "Genre_ID = " + id;
 
-            ConnectionOfDelete(queryString);
+            RowsAffectedByDelete(queryString);
         }
     }
 }

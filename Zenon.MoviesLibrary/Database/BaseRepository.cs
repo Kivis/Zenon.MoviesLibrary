@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
+﻿using System.Configuration;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Web;
+using System.Web.ModelBinding;
+using Microsoft.Ajax.Utilities;
+
 
 namespace Zenon.MoviesLibrary.API.Database
 {
@@ -11,28 +10,61 @@ namespace Zenon.MoviesLibrary.API.Database
     {
         protected readonly string ConnectionString = ConfigurationManager.ConnectionStrings["MoviesLibrary"].ConnectionString;
 
-        public int ConnectionOfInsert(string queryString)
+        private SqlConnection GetConnection()
         {
-            using (var connection = new SqlConnection(ConnectionString))
+            return new SqlConnection(ConnectionString);
+        }
+
+        public int Insert(string queryString)
+        {
+            using (var connection = GetConnection()) // this part repeats in other method, but it shouldn't
             {
                 var command = new SqlCommand(queryString, connection);
                 connection.Open();
+
                 var returnValue = (int)command.ExecuteScalar();
+
                 connection.Close();
                 return returnValue;
             }
         }
 
-        public void ConnectionOfDelete(string queryString)
+        public void DeleteRow(string queryString) // wtf? what is this action
         {
-            using (var connection = new SqlConnection(ConnectionString))
+            using (var connection = GetConnection())
             {
                 var command = new SqlCommand(queryString, connection);
                 connection.Open();
+
                 command.ExecuteNonQuery();
+
                 connection.Close();
             }
         }
 
+        public void Execute(string queryString, Operation operation)
+        {
+            using (var connection = GetConnection())
+            {
+                var command = new SqlCommand(queryString, connection);
+                connection.Open();
+                if (operation == Operation.Insert)
+                {
+                    var returnValue = (int)command.ExecuteScalar();
+                }
+                else if (operation == Operation.Delete)
+                {
+                    command.ExecuteNonQuery();
+                }
+                connection.Close();
+            }
+        }
+
+    }
+
+    public enum Operation
+    {
+        Insert,
+        Delete
     }
 }

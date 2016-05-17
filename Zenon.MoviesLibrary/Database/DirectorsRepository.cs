@@ -4,7 +4,7 @@ using Zenon.MoviesLibrary.API.Models;
 
 namespace Zenon.MoviesLibrary.API.Database
 {
-    public class DirectorsRepository : BaseRepository
+    public class DirectorsRepository : BaseRepository // there should be no SqlConnections in this layer
     {
         public Director GetDirector(int id)
         {
@@ -37,7 +37,7 @@ namespace Zenon.MoviesLibrary.API.Database
 
             var listOfDirectors = new List<Director>();
 
-            using (var connection = new SqlConnection(ConnectionString))
+            using (var connection = new SqlConnection(ConnectionString)) // actions like these should be extracted to base class
             {
                 var command = new SqlCommand(queryString, connection);
 
@@ -71,7 +71,7 @@ namespace Zenon.MoviesLibrary.API.Database
         public int InsertDirector(Director director)
         {
             var queryString = string.Format("InsertDirector '{0}', '{1}'", director.FirstName, director.LastName);
-            return ConnectionOfInsert(queryString);
+            return Execute(queryString);
         }
 
         public void DeleteDirectorById(int id)
@@ -81,7 +81,8 @@ namespace Zenon.MoviesLibrary.API.Database
                 "WHERE " +
                 "Director_ID = " + id;
 
-            ConnectionOfDelete(queryString);
+            RowsAffectedByDelete(queryString);
+            
         }
 
     }

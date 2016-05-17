@@ -77,7 +77,7 @@ namespace Zenon.MoviesLibrary.API.Database
                               $"{movie.Director.DirectorId}, " +
                               $"{movie.Language.LanguageId}";
 
-            return ConnectionOfInsert(queryString);
+            return Execute(queryString);
         }
 
 
@@ -107,7 +107,7 @@ namespace Zenon.MoviesLibrary.API.Database
         public void DeleteMovieById(int id)
         {
             var queryString = "DELETE FROM Movies WHERE Movie_ID = " + id;
-            ConnectionOfDelete(queryString);
+            RowsAffectedByDelete(queryString);
         }
 
         private void MapGenres(Movie movie, MovieDbModel movieDbModel)

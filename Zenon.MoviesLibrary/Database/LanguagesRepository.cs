@@ -70,7 +70,7 @@ namespace Zenon.MoviesLibrary.API.Database
         public int InsertLanguage(Language language)
         {
             var queryString = string.Format("InsertLanguage '{0}'", language.Name);
-            return ConnectionOfInsert(queryString);
+            return Execute(queryString);
         }
 
         public void DeleteLanguageById(int id)
@@ -80,7 +80,7 @@ namespace Zenon.MoviesLibrary.API.Database
                 "WHERE " +
                 "Language_ID = "+ id ;
 
-            ConnectionOfDelete(queryString);
+            RowsAffectedByDelete(queryString);
         }
     }
 }
