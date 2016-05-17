@@ -50,9 +50,18 @@ namespace Zenon.MoviesLibrary.API.Database
             }
         }
 
-        public int Insert()
+        public int Insert(string queryString)
         {
-            throw new NotImplementedException();
+            using (var connection = GetConnection())
+            {
+                var command = new SqlCommand(queryString, connection);
+                connection.Open();
+
+                var returnValue = (int)command.ExecuteScalar();
+
+                connection.Close();
+                return returnValue;
+            }
         }
 
         public void Update()
@@ -60,9 +69,18 @@ namespace Zenon.MoviesLibrary.API.Database
             throw new NotImplementedException();
         }
 
-        public void Delete()
+        public void Delete(string queryString)
         {
-            throw new NotImplementedException();
+            using (var connection = GetConnection())
+            {
+                var command = new SqlCommand(queryString, connection);
+
+                connection.Open();
+
+                command.ExecuteNonQuery();
+
+                connection.Close();
+            }
         }
 
         private SqlConnection GetConnection()

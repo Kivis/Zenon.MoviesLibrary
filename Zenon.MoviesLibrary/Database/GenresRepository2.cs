@@ -33,15 +33,28 @@ namespace Zenon.MoviesLibrary.API.Database
             return GetItems(queryString, MapGenre);
         }
 
-        //public void Delete()
-        //{
-        //    base.Delete();
-        //}
+        public void Delete(int id)
+        {
+            var queryString =
+               "DELETE FROM Genres " +
+               "WHERE " +
+               "Genre_ID = " + id;
+
+            Delete(queryString);
+        }
+
+        public int Insert(Genre genre)
+        {
+            var queryString = string.Format("InsertGenre '{0}'", genre.Name); // Is this a good query???
+
+            return Insert(queryString);
+        }
 
         //public void Update()
         //{
         //    base.Update();
         //}
+
     }
 }
 

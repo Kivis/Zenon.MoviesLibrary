@@ -29,7 +29,7 @@ namespace Zenon.MoviesLibrary.API.Database
             }
         }
 
-        public void DeleteRow(string queryString) // wtf? what is this action
+        public void DeleteRow(string queryString)
         {
             using (var connection = GetConnection())
             {

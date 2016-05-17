@@ -1,5 +1,8 @@
-﻿using NUnit.Framework;
+﻿using System;
+using FluentAssertions;
+using NUnit.Framework;
 using Zenon.MoviesLibrary.API.Database;
+using Zenon.MoviesLibrary.API.Models;
 
 namespace Zenon.MoviesLibrary.API.Tests.Database
 {
@@ -22,6 +25,29 @@ namespace Zenon.MoviesLibrary.API.Tests.Database
             var genre = _genresRepository2.Get();
 
             Assert.That(genre.Count > 0);
+        }
+
+        [Test]
+        public void InsertGenre_NormalFlow()
+        {
+            var genre = new Genre() { Name = "MyTestGenre" + Guid.NewGuid().ToString() };
+
+            genre.GenreId = _genresRepository2.Insert(genre);
+            var newRecord = _genresRepository2.Get(genre.GenreId);
+
+            genre.ShouldBeEquivalentTo(newRecord);
+        }
+
+        [Test]
+        public void DeleteGenreByID_DeleteById()
+        {
+            var genre = new Genre() { Name = "DeleteTest" };
+
+            var idOfInsertedGenre = _genresRepository2.Insert(genre);
+            _genresRepository2.Delete(idOfInsertedGenre);
+            var retrievedRecord = _genresRepository2.Get(idOfInsertedGenre);
+
+            Assert.AreEqual(null, retrievedRecord);
         }
 
     }
