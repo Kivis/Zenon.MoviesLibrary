@@ -8,19 +8,15 @@ namespace Zenon.MoviesLibrary.API.Database
     {
         public Genre Get(int id)
         {
-            var queryString =
-                "SELECT Genre_ID, Name " +
-                "FROM Genres WHERE Genre_ID = " + id;
-
-            return Get(queryString, MapGenre);
+            return Get(id, MapGenre);
         }
 
         private Genre MapGenre(SqlDataReader reader)
         {
             return new Genre
             {
-                GenreId = reader.GetInt32(0), // first result table column
-                Name = reader.GetString(1), // second result table column
+                GenreId = (int)reader["Genre_ID"],
+                Name = (string)reader["Name"],
             };
         }
 
@@ -33,21 +29,15 @@ namespace Zenon.MoviesLibrary.API.Database
             return GetItems(queryString, MapGenre);
         }
 
-        public void Delete(int id)
+        public void Delete(Genre genre, int id)
         {
-            var queryString =
-               "DELETE FROM Genres " +
-               "WHERE " +
-               "Genre_ID = " + id;
-
-            Delete(queryString);
+            base.Delete(genre,id);
         }
 
         public int Insert(Genre genre)
         {
-            var queryString = string.Format("InsertGenre '{0}'", genre.Name); // Is this a good query???
-
-            return Insert(queryString);
+            var genreName = genre.Name;
+            return Insert(genre, genreName);
         }
 
         //public void Update()

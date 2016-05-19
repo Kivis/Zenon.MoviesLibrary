@@ -9,8 +9,16 @@ namespace Zenon.MoviesLibrary.API.Database
     {
         protected readonly string ConnectionString = ConfigurationManager.ConnectionStrings["MoviesLibrary"].ConnectionString;
 
-        public T Get(string queryString, Func<SqlDataReader, T> mapEntity)
+        protected readonly string table = typeof (T).Name + "s";
+        protected readonly string tableIdName = typeof (T).Name + "_ID";
+
+        public T Get(int id, Func<SqlDataReader, T> mapEntity)
         {
+            //var table = typeof(T).Name + "s";
+            //var tableIdName = typeof(T).Name + "_ID";
+
+            var queryString = "SELECT * FROM " + table + " WHERE " + tableIdName + " = " + id;
+
             using (var connection = GetConnection())
             {
                 var command = new SqlCommand(queryString, connection);
@@ -50,8 +58,12 @@ namespace Zenon.MoviesLibrary.API.Database
             }
         }
 
-        public int Insert(string queryString)
+        public int Insert(T obj, string objName)
         {
+            var insertName = typeof(T).Name;
+
+            var queryString = string.Format("Insert" + insertName + " '{0}'", objName);
+
             using (var connection = GetConnection())
             {
                 var command = new SqlCommand(queryString, connection);
@@ -69,8 +81,10 @@ namespace Zenon.MoviesLibrary.API.Database
             throw new NotImplementedException();
         }
 
-        public void Delete(string queryString)
+        public void Delete(T obj, int id)
         {
+            var queryString = "DELETE FROM " + table + " WHERE " + tableIdName + " = " + id;
+
             using (var connection = GetConnection())
             {
                 var command = new SqlCommand(queryString, connection);
