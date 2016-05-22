@@ -7,17 +7,14 @@ namespace Zenon.MoviesLibrary.API.Database
 {
     public class BaseRepository2<T> where T : class
     {
-        protected readonly string ConnectionString = ConfigurationManager.ConnectionStrings["MoviesLibrary"].ConnectionString;
+        private readonly string _connectionString = ConfigurationManager.ConnectionStrings["MoviesLibrary"].ConnectionString;
 
-        protected readonly string table = typeof (T).Name + "s";
-        protected readonly string tableIdName = typeof (T).Name + "_ID";
+        private readonly string _tableName = typeof (T).Name + "s";
+        private readonly string _tableIdName = typeof (T).Name + "_ID";
 
         public T Get(int id, Func<SqlDataReader, T> mapEntity)
         {
-            //var table = typeof(T).Name + "s";
-            //var tableIdName = typeof(T).Name + "_ID";
-
-            var queryString = "SELECT * FROM " + table + " WHERE " + tableIdName + " = " + id;
+            var queryString = $"SELECT * FROM {_tableName} WHERE {_tableIdName} = {id}";
 
             using (var connection = GetConnection())
             {
@@ -37,8 +34,11 @@ namespace Zenon.MoviesLibrary.API.Database
             }
         }
 
-        public List<T> GetItems(string queryString, Func<SqlDataReader, T> mapEntity)
+        public List<T> GetItems( Func<SqlDataReader, T> mapEntity)
         {
+
+            var queryString = $"SELECT {_tableIdName}, Name FROM {_tableName}";
+
             List<T> entities = new List<T>();
 
             using (var connection = GetConnection())
@@ -58,7 +58,7 @@ namespace Zenon.MoviesLibrary.API.Database
             }
         }
 
-        public int Insert(T obj, string objName)
+        public int Insert(string objName)
         {
             var insertName = typeof(T).Name;
 
@@ -81,9 +81,9 @@ namespace Zenon.MoviesLibrary.API.Database
             throw new NotImplementedException();
         }
 
-        public void Delete(T obj, int id)
+        public void Delete(int id)
         {
-            var queryString = "DELETE FROM " + table + " WHERE " + tableIdName + " = " + id;
+            var queryString = "DELETE FROM " + _tableName + " WHERE " + _tableIdName + " = " + id;
 
             using (var connection = GetConnection())
             {
@@ -99,7 +99,7 @@ namespace Zenon.MoviesLibrary.API.Database
 
         private SqlConnection GetConnection()
         {
-            return new SqlConnection(ConnectionString);
+            return new SqlConnection(_connectionString);
         }
     }
 }

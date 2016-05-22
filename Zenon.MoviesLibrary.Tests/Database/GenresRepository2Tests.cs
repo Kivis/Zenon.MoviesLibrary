@@ -44,7 +44,7 @@ namespace Zenon.MoviesLibrary.API.Tests.Database
             var genre = new Genre() { Name = "DeleteTest" };
 
             var idOfInsertedGenre = _genresRepository2.Insert(genre);
-            _genresRepository2.Delete(genre, idOfInsertedGenre);
+            _genresRepository2.Delete(idOfInsertedGenre);
             var retrievedRecord = _genresRepository2.Get(idOfInsertedGenre);
 
             Assert.AreEqual(null, retrievedRecord);

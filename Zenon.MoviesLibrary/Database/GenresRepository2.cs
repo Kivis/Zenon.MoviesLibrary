@@ -22,22 +22,13 @@ namespace Zenon.MoviesLibrary.API.Database
 
         public List<Genre> Get()
         {
-            var queryString =
-                     "SELECT Genre_ID, Name " +
-                     "FROM Genres";
-
-            return GetItems(queryString, MapGenre);
-        }
-
-        public void Delete(Genre genre, int id)
-        {
-            base.Delete(genre,id);
+            return GetItems(MapGenre);
         }
 
         public int Insert(Genre genre)
         {
             var genreName = genre.Name;
-            return Insert(genre, genreName);
+            return Insert(genreName);
         }
 
         //public void Update()
