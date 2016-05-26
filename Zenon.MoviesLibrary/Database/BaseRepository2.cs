@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data;
 using System.Data.SqlClient;
 
 namespace Zenon.MoviesLibrary.API.Database
@@ -58,15 +59,19 @@ namespace Zenon.MoviesLibrary.API.Database
             }
         }
 
-        public int Insert(string objName)
+        public int Insert(List<SqlParameter> paramList)
         {
+            
             var insertName = typeof(T).Name;
-
-            var queryString = string.Format("Insert" + insertName + " '{0}'", objName);
 
             using (var connection = GetConnection())
             {
-                var command = new SqlCommand(queryString, connection);
+                var command = new SqlCommand("Insert" + insertName, connection);
+
+                command.CommandType = CommandType.StoredProcedure;
+
+                command.Parameters.AddRange(paramList.ToArray());
+
                 connection.Open();
 
                 var returnValue = (int)command.ExecuteScalar();
@@ -74,6 +79,21 @@ namespace Zenon.MoviesLibrary.API.Database
                 connection.Close();
                 return returnValue;
             }
+
+            //var insertName = typeof(T).Name;
+
+            //var queryString = string.Format("Insert" + insertName + " '{0}'", objName);
+
+            //using (var connection = GetConnection())
+            //{
+            //    var command = new SqlCommand(queryString, connection);
+            //    connection.Open();
+
+            //    var returnValue = (int)command.ExecuteScalar();
+
+            //    connection.Close();
+            //    return returnValue;
+            //}
         }
 
         public void Update()
@@ -81,7 +101,7 @@ namespace Zenon.MoviesLibrary.API.Database
             throw new NotImplementedException();
         }
 
-        public void Delete(int id)
+        public void DeleteItem(int id)
         {
             var queryString = "DELETE FROM " + _tableName + " WHERE " + _tableIdName + " = " + id;
 

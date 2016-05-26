@@ -159,10 +159,13 @@
     <Compile Include="Controllers\MoviesController.cs" />
     <Compile Include="Database\BaseRepository2.cs" />
     <Compile Include="Database\BaseRepository.cs" />
+    <Compile Include="Database\DirectorsRepository2.cs" />
     <Compile Include="Database\DirectorsRepository.cs" />
     <Compile Include="Database\GenresRepository2.cs" />
     <Compile Include="Database\GenresRepository.cs" />
+    <Compile Include="Database\LanguagesRepository2.cs" />
     <Compile Include="Database\LanguagesRepository.cs" />
+    <Compile Include="Database\MoviesRepository2.cs" />
     <Compile Include="Database\MoviesRepository.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

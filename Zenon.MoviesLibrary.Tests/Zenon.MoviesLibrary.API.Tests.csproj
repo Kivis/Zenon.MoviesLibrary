@@ -52,6 +52,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Database\DirectorsRepository2Tests.cs" />
     <Compile Include="Database\DirectorsRepositoryTests.cs" />
     <Compile Include="Database\GenresRepository2Tests.cs" />
     <Compile Include="Database\GenresRepositoryTests.cs" />
