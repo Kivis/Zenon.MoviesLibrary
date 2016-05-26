@@ -10,12 +10,25 @@ namespace Zenon.MoviesLibrary.API.Database
     {
         private readonly string _connectionString = ConfigurationManager.ConnectionStrings["MoviesLibrary"].ConnectionString;
 
-        private readonly string _tableName = typeof (T).Name + "s";
-        private readonly string _tableIdName = typeof (T).Name + "_ID";
+        private readonly string _getOneQuery;
+        private readonly string _getAllQuery;
+        private readonly string _deleteOneQuery;
+        private readonly string _insertStoredProcedureName;
+
+        public BaseRepository2()
+        {
+            var typeName = typeof(T).Name;
+            var tableIdName = typeName + "_ID";
+            var tableName = typeName + "s";
+            _getOneQuery = $"SELECT * FROM {tableName} WHERE {tableIdName} = ";
+            _getAllQuery = $"SELECT * FROM {tableName}";
+            _deleteOneQuery = $"DELETE FROM { tableName} WHERE { tableIdName} = ";
+            _insertStoredProcedureName = $"Inser{typeName}";
+        }
 
         public T Get(int id, Func<SqlDataReader, T> mapEntity)
         {
-            var queryString = $"SELECT * FROM {_tableName} WHERE {_tableIdName} = {id}";
+            var queryString = _getOneQuery + id;
 
             using (var connection = GetConnection())
             {
@@ -37,14 +50,11 @@ namespace Zenon.MoviesLibrary.API.Database
 
         public List<T> GetItems( Func<SqlDataReader, T> mapEntity)
         {
-
-            var queryString = $"SELECT {_tableIdName}, Name FROM {_tableName}";
-
             List<T> entities = new List<T>();
 
             using (var connection = GetConnection())
             {
-                var command = new SqlCommand(queryString, connection);
+                var command = new SqlCommand(_getAllQuery, connection);
 
                 connection.Open();
 
@@ -59,18 +69,15 @@ namespace Zenon.MoviesLibrary.API.Database
             }
         }
 
-        public int Insert(List<SqlParameter> paramList)
+        public int Insert(SqlParameter[] paramList)
         {
-            
-            var insertName = typeof(T).Name;
-
             using (var connection = GetConnection())
             {
-                var command = new SqlCommand("Insert" + insertName, connection);
+                var command = new SqlCommand(_insertStoredProcedureName, connection);
 
                 command.CommandType = CommandType.StoredProcedure;
 
-                command.Parameters.AddRange(paramList.ToArray());
+                command.Parameters.AddRange(paramList);
 
                 connection.Open();
 
@@ -79,21 +86,6 @@ namespace Zenon.MoviesLibrary.API.Database
                 connection.Close();
                 return returnValue;
             }
-
-            //var insertName = typeof(T).Name;
-
-            //var queryString = string.Format("Insert" + insertName + " '{0}'", objName);
-
-            //using (var connection = GetConnection())
-            //{
-            //    var command = new SqlCommand(queryString, connection);
-            //    connection.Open();
-
-            //    var returnValue = (int)command.ExecuteScalar();
-
-            //    connection.Close();
-            //    return returnValue;
-            //}
         }
 
         public void Update()
@@ -103,7 +95,7 @@ namespace Zenon.MoviesLibrary.API.Database
 
         public void DeleteItem(int id)
         {
-            var queryString = "DELETE FROM " + _tableName + " WHERE " + _tableIdName + " = " + id;
+            var queryString = _deleteOneQuery + id;
 
             using (var connection = GetConnection())
             {

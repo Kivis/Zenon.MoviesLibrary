@@ -56,7 +56,9 @@
     <Compile Include="Database\DirectorsRepositoryTests.cs" />
     <Compile Include="Database\GenresRepository2Tests.cs" />
     <Compile Include="Database\GenresRepositoryTests.cs" />
+    <Compile Include="Database\LanguagesRepository2Tests.cs" />
     <Compile Include="Database\LanguagesRepositoryTests.cs" />
+    <Compile Include="Database\MoviesRepository2Tests.cs" />
     <Compile Include="Database\MoviesRepositoryTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -46,18 +46,20 @@ namespace Zenon.MoviesLibrary.API.Database
         }
 
 
-        //public int Insert(Movie movie)
-        //{
-        //    List<SqlParameter> movieParameterList = new List<SqlParameter>();
-        //    movieParameterList.Add(new SqlParameter("@Title", "Title"));
-        //    movieParameterList.Add(new SqlParameter("@ReleaseDate", "ReleaseDate"));
-        //    movieParameterList.Add(new SqlParameter("@Description", "Description"));
-        //    movieParameterList.Add(new SqlParameter("@GenreId", "GenreId"));
-        //    movieParameterList.Add(new SqlParameter("@DirectorId", "DirectorId"));
-        //    movieParameterList.Add(new SqlParameter("@LanguageId", "LanguageId"));
+        public int Insert(Movie movie)
+        {
+            List<SqlParameter> movieParameterList = new List<SqlParameter>()
+            {
+                new SqlParameter("@Title", movie.Title),
+                new SqlParameter("@ReleaseDate", movie.ReleaseDate),
+                new SqlParameter("@Description", movie.Description),
+                new SqlParameter("@GenreId", movie.Genre.GenreId),
+                new SqlParameter("@DirectorId", movie.Director.DirectorId),
+                new SqlParameter("@LanguageId", movie.Language.LanguageId)
+            };
 
-        //    return Insert(movieParameterList);
-        //}
+            return Insert(movieParameterList);
+        }
 
         public void Delete(int id)
         {

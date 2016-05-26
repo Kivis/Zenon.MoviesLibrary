@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Data;
 using System.Data.SqlClient;
 using Zenon.MoviesLibrary.API.Models;
 
@@ -28,7 +27,7 @@ namespace Zenon.MoviesLibrary.API.Database
 
         public int InsertDirector(Director director)
         {
-            var directorParameterList = new List<SqlParameter>()
+            var directorParameterList = new[]
             {
                 new SqlParameter("@FirstName", director.FirstName),
                 new SqlParameter("@LastName", director.LastName)

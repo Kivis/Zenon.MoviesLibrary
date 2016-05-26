@@ -28,11 +28,10 @@ namespace Zenon.MoviesLibrary.API.Database
 
         public int Insert(Genre genre)
         {
-            // find differences between array and list
-            // fix insert to work
-            // DEBUG if sth is not working ok
-
-            var genreParameterList = new List<SqlParameter>() { new SqlParameter("@Name", genre.Name) };
+            var genreParameterList = new List<SqlParameter>()
+            {
+                new SqlParameter("@Name", genre.Name)
+            };
 
             return Insert(genreParameterList);
         }
