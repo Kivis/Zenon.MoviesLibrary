@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Data;
 using System.Data.SqlClient;
 using Zenon.MoviesLibrary.API.Models;
 
@@ -28,7 +27,7 @@ namespace Zenon.MoviesLibrary.API.Database
 
         public int Insert(Genre genre)
         {
-            var genreParameterList = new List<SqlParameter>()
+            var genreParameterList = new[]
             {
                 new SqlParameter("@Name", genre.Name)
             };
@@ -36,16 +35,20 @@ namespace Zenon.MoviesLibrary.API.Database
             return Insert(genreParameterList);
         }
 
+        public void Update(Genre genre)
+        {
+            var genreParameterList = new[]
+            {
+                new SqlParameter("@ID", genre.GenreId),
+                new SqlParameter("@Name", genre.Name)
+            };
+            Update(genreParameterList);
+        }
+
         public void Delete(int id)
         {
             DeleteItem(id);
         }
-
-        //public void Update()
-        //{
-        //    base.Update();
-        //}
-
     }
 }
 

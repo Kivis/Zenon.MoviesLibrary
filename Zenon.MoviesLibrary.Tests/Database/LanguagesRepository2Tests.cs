@@ -39,6 +39,21 @@ namespace Zenon.MoviesLibrary.API.Tests.Database
         }
 
         [Test]
+        public void UpdateLanguage_NormalFlow()
+        {
+            var language = new Language()
+            {
+                LanguageId = 82,
+                Name = "InsertTest" + Guid.NewGuid().ToString()
+            };
+
+            _languagesRepository2.Update(language);
+            var newRecord = _languagesRepository2.Get(language.LanguageId);
+
+            language.ShouldBeEquivalentTo(newRecord);
+        }
+
+        [Test]
         public void DeleteLanguageByID_DeleteById()
         {
             var language = new Language() { Name = "DeleteTest" };

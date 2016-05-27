@@ -25,7 +25,7 @@ namespace Zenon.MoviesLibrary.API.Database
             };
         }
 
-        public int InsertDirector(Director director)
+        public int Insert(Director director)
         {
             var directorParameterList = new[]
             {
@@ -34,6 +34,17 @@ namespace Zenon.MoviesLibrary.API.Database
             };
 
             return Insert(directorParameterList);
+        }
+
+        public void Update(Director director)
+        {
+            var directorParameterList = new[]
+            {
+                new SqlParameter("@ID", director.DirectorId),
+                new SqlParameter("@FirstName", director.FirstName),
+                new SqlParameter("@LastName", director.LastName)
+            };
+            Update(directorParameterList);
         }
 
         public void Delete(int id)

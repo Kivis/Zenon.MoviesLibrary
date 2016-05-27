@@ -48,7 +48,7 @@ namespace Zenon.MoviesLibrary.API.Database
 
         public int Insert(Movie movie)
         {
-            List<SqlParameter> movieParameterList = new List<SqlParameter>()
+            var movieParameterList = new[]
             {
                 new SqlParameter("@Title", movie.Title),
                 new SqlParameter("@ReleaseDate", movie.ReleaseDate),
@@ -59,6 +59,22 @@ namespace Zenon.MoviesLibrary.API.Database
             };
 
             return Insert(movieParameterList);
+        }
+
+        public void Update(Movie movie)
+        {
+            var movieParameterList = new[]
+            {
+                new SqlParameter("@ID", movie.MovieId), 
+                new SqlParameter("@Title", movie.Title),
+                new SqlParameter("@ReleaseDate", movie.ReleaseDate),
+                new SqlParameter("@Description", movie.Description),
+                new SqlParameter("@GenreId", movie.Genre.GenreId),
+                new SqlParameter("@DirectorId", movie.Director.DirectorId),
+                new SqlParameter("@LanguageId", movie.Language.LanguageId)
+            };
+
+            Update(movieParameterList);
         }
 
         public void Delete(int id)

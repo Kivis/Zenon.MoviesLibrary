@@ -32,17 +32,33 @@ namespace Zenon.MoviesLibrary.API.Tests.Database
                 FirstName = "TestFirstName" + Guid.NewGuid().ToString(),
                 LastName = "TestLastName" + Guid.NewGuid().ToString()
             };
-            director.DirectorId = _directorsRepository2.InsertDirector(director);
+            director.DirectorId = _directorsRepository2.Insert(director);
             var newRecord = _directorsRepository2.Get(director.DirectorId);
 
             director.ShouldBeEquivalentTo(newRecord);
         }
+
+        [Test]
+        public void UpdateDirector_NormalFlow()
+        {
+            var director = new Director()
+            {
+                DirectorId = 82,
+                FirstName = "TestFirstName" + Guid.NewGuid().ToString(),
+                LastName = "TestLastName" + Guid.NewGuid().ToString()
+            };
+            _directorsRepository2.Update(director);
+            var newRecord = _directorsRepository2.Get(director.DirectorId);
+
+            director.ShouldBeEquivalentTo(newRecord);
+        }
+
         [Test]
         public void DeleteDirectorByID_DeleteById()
         {
             var director = new Director() {FirstName = "Delete", LastName = "Test"};
 
-            var idOfInsertedMovie = _directorsRepository2.InsertDirector(director);
+            var idOfInsertedMovie = _directorsRepository2.Insert(director);
             _directorsRepository2.Delete(idOfInsertedMovie);
             var retrievedRecord = _directorsRepository2.Get(idOfInsertedMovie);
 

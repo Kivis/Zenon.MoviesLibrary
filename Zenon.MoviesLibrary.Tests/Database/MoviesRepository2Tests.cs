@@ -47,6 +47,25 @@ namespace Zenon.MoviesLibrary.API.Tests.Database
         }
 
         [Test]
+        public void UpdateMovies_NormalFlow()
+        {
+            var movie = new Movie()
+            {
+                MovieId = 85,
+                Title = "TestTitle " + Guid.NewGuid().ToString(),
+                ReleaseDate = DateTime.Parse("2016-05-27"),
+                Description = "TestDescriptionUpdateTEST",
+                Genre = new Genre { GenreId = 1, Name = "Action" },
+                Director = new Director { DirectorId = 1, FirstName = "Tim", LastName = "Miller" },
+                Language = new Language { LanguageId = 1, Name = "English" }
+            };
+            _moviesRepository2.Update(movie);
+            var newRecord = _moviesRepository2.Get(movie.MovieId);
+
+            movie.ShouldBeEquivalentTo(newRecord);
+        }
+
+        [Test]
         public void DeleteMovieByID_DeleteById()
         {
             var movie = new Movie()

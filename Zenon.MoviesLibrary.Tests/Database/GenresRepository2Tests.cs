@@ -37,6 +37,20 @@ namespace Zenon.MoviesLibrary.API.Tests.Database
 
             genre.ShouldBeEquivalentTo(newRecord);
         }
+        [Test]
+        public void UpdateGenre_NormalFlow()
+        {
+            var genre = new Genre()
+            {
+                GenreId = 69,
+                Name = "MyTestGenre" + Guid.NewGuid().ToString()
+            };
+
+            _genresRepository2.Update(genre);
+            var newRecord = _genresRepository2.Get(genre.GenreId);
+
+            genre.ShouldBeEquivalentTo(newRecord);
+        }
 
         [Test]
         public void DeleteGenreByID_DeleteById()

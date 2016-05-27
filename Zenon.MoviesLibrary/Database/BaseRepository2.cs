@@ -14,6 +14,7 @@ namespace Zenon.MoviesLibrary.API.Database
         private readonly string _getAllQuery;
         private readonly string _deleteOneQuery;
         private readonly string _insertStoredProcedureName;
+        private readonly string _updateStoredProcedureName;
 
         public BaseRepository2()
         {
@@ -23,7 +24,8 @@ namespace Zenon.MoviesLibrary.API.Database
             _getOneQuery = $"SELECT * FROM {tableName} WHERE {tableIdName} = ";
             _getAllQuery = $"SELECT * FROM {tableName}";
             _deleteOneQuery = $"DELETE FROM { tableName} WHERE { tableIdName} = ";
-            _insertStoredProcedureName = $"Inser{typeName}";
+            _insertStoredProcedureName = $"Insert{typeName}";
+            _updateStoredProcedureName = $"Update{typeName}";
         }
 
         public T Get(int id, Func<SqlDataReader, T> mapEntity)
@@ -88,9 +90,22 @@ namespace Zenon.MoviesLibrary.API.Database
             }
         }
 
-        public void Update()
+        public void Update(SqlParameter[] paramList)
         {
-            throw new NotImplementedException();
+            using (var connection = GetConnection())
+            {
+                var command = new SqlCommand(_updateStoredProcedureName, connection);
+
+                command.CommandType = CommandType.StoredProcedure;
+
+                command.Parameters.AddRange(paramList);
+
+                connection.Open();
+
+                command.ExecuteNonQuery();
+
+                connection.Close();
+            }
         }
 
         public void DeleteItem(int id)

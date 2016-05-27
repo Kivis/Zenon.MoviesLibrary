@@ -28,9 +28,22 @@ namespace Zenon.MoviesLibrary.API.Database
 
         public int Insert(Language language)
         {
-            var languageParameterList = new List<SqlParameter>() {new SqlParameter("@Name", language.Name) };
+            var languageParameterList = new[]
+            {
+                new SqlParameter("@Name", language.Name)
+            };
 
             return Insert(languageParameterList);
+        }
+
+        public void Update(Language language)
+        {
+            var languageParameterList = new[]
+            {
+                new SqlParameter("@ID", language.LanguageId),
+                new SqlParameter("@Name", language.Name)
+            };
+            Update(languageParameterList);
         }
 
         public void Delete(int id)
