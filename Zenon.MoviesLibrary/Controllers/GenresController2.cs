@@ -5,32 +5,32 @@ using Zenon.MoviesLibrary.API.Models;
 
 namespace Zenon.MoviesLibrary.API.Controllers
 {
-    public class GenresController : ApiController
+    public class GenresController2 : ApiController
     {
-        private readonly GenresRepository _genresRepository = new GenresRepository();
+        private readonly GenresRepository2 _genresRepository2 = new GenresRepository2();
         // GET: Genres
         public List<Genre> Get()
         {
-            return _genresRepository.GetGenres();
+            return _genresRepository2.Get();
         }
         // GET: Genre by Id
         public Genre Get(int id)
         {
-            return _genresRepository.GetGenre(id);
+            return _genresRepository2.Get(id);
         }
 
         // INSERT: Insert genre name
         [HttpPost]
         public void Insert(Genre genre)
         {
-            _genresRepository.InsertGenre(genre);
+            _genresRepository2.Insert(genre);
         }
 
         // DELETE: DELETE genre by id
         [HttpDelete]
         public void Delete(int id)
         {
-            _genresRepository.DeleteGenreById(id);
+            _genresRepository2.Delete(id);
 
         }
     }

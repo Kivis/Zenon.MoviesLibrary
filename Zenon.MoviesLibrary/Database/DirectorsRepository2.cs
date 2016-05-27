@@ -15,6 +15,7 @@ namespace Zenon.MoviesLibrary.API.Database
         {
             return GetItems(MapDirector);
         }
+
         private Director MapDirector(SqlDataReader reader)
         {
             return new Director

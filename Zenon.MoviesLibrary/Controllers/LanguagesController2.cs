@@ -5,33 +5,33 @@ using Zenon.MoviesLibrary.API.Models;
 
 namespace Zenon.MoviesLibrary.API.Controllers
 {
-    public class LanguagesController : ApiController
+    public class LanguagesController2 : ApiController
     {
-        private readonly LanguagesRepository _languagesRepository = new LanguagesRepository();
+        private readonly LanguagesRepository2 _languagesRepository2 = new LanguagesRepository2();
 
         // GET: Languages
         public List<Language> Get()
         {
-            return _languagesRepository.GetLanguages();
+            return _languagesRepository2.Get();
         }
 
         // GET: Language by Id
         public Language Get(int id)
         {
-            return _languagesRepository.GetLanguage(id);
+            return _languagesRepository2.Get(id);
         }
         // INSERT: Insert language name
         [HttpPost]
         public void Insert([FromBody]Language language)
         {
-            _languagesRepository.InsertLanguage(language);
+            _languagesRepository2.Insert(language);
             
         }
         // DELETE: DELETE language by id
         [HttpDelete]
         public void Delete(int id)
         {
-            _languagesRepository.DeleteLanguageById(id);
+            _languagesRepository2.Delete(id);
 
         }
     }
