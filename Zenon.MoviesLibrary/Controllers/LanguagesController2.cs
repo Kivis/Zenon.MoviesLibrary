@@ -34,5 +34,11 @@ namespace Zenon.MoviesLibrary.API.Controllers
             _languagesRepository2.Delete(id);
 
         }
+        // UPDATE
+        [HttpPut]
+        public void Update(Language language)
+        {
+            _languagesRepository2.Update(language);
+        }
     }
 }

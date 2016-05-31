@@ -31,5 +31,11 @@ namespace Zenon.MoviesLibrary.API.Controllers
         {
             _directorsRepository2.Delete(id);
         }
+        // UPDATE
+        [HttpPut]
+        public void Update(Director director)
+        {
+            _directorsRepository2.Update(director);
+        }
     }
 }

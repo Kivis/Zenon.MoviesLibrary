@@ -33,5 +33,11 @@ namespace Zenon.MoviesLibrary.API.Controllers
             _genresRepository2.Delete(id);
 
         }
+        // UPDATE
+        [HttpPut]
+        public void Update(Genre genre)
+        {
+            _genresRepository2.Update(genre);
+        }
     }
 }

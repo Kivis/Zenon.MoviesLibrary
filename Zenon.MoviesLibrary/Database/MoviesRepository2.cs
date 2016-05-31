@@ -77,11 +77,6 @@ namespace Zenon.MoviesLibrary.API.Database
             Update(movieParameterList);
         }
 
-        public void Delete(int id)
-        {
-           DeleteItem(id);
-        }
-
         private void MapGenres(Movie movie, MovieDbModel movieDbModel)
         {
             var genre = _genresRepository2.Get(movieDbModel.GenreId);

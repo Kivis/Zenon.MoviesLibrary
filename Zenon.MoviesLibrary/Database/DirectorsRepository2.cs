@@ -47,11 +47,6 @@ namespace Zenon.MoviesLibrary.API.Database
             };
             Update(directorParameterList);
         }
-
-        public void Delete(int id)
-        {
-            DeleteItem(id);
-        }
     }
 }
 

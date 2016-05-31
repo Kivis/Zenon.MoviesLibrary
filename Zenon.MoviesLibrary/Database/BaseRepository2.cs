@@ -108,7 +108,7 @@ namespace Zenon.MoviesLibrary.API.Database
             }
         }
 
-        public void DeleteItem(int id)
+        public void Delete(int id)
         {
             var queryString = _deleteOneQuery + id;
 
